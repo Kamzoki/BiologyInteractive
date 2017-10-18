@@ -16,8 +16,8 @@ public class Tool : MonoBehaviour {
 
     private void OnMouseDrag()
     {
-        LabManager.LM.CheckMouseClick();
-        if (gameObject.name == LabManager.LM.currentSelectedObject.name)
+        LabManager.LM.fn_CheckMouseClick();
+        if (gameObject.name == LabManager.LM.m_CurrentSelectedObject.name)
         {
             newXPosition = Input.mousePosition.x;
             newYPosition = Input.mousePosition.y;
