@@ -52,7 +52,6 @@ public class UIElement : MonoBehaviour {
         {
             if (playMultiAnimations == true)
             {
-                isPressedBefore = !isPressedBefore;
                 if (isPressedBefore == false)
                 {
                     m_AnimationComponent.Play(AnimationName);
@@ -61,6 +60,7 @@ public class UIElement : MonoBehaviour {
                 {
                     m_AnimationComponent.Play(m_AnotherAnimation);
                 }
+                isPressedBefore = !isPressedBefore;
             }
             else
             {
