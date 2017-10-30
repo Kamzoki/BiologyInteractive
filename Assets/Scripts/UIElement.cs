@@ -36,7 +36,7 @@ public class UIElement : MonoBehaviour {
         }
         else
         {
-            SceneManager.LoadSceneAsync()
+            //SceneManager.LoadSceneAsync()
         }
     }
     public void fn_LoadObject(bool disableObject)
@@ -78,6 +78,6 @@ public class UIElement : MonoBehaviour {
     public void fn_Exit()
     {
         m_SceneToLoad = ApplicationManager.AM.m_PreviousScene;
-        fn_LoadScene();
+        //fn_LoadScene();
     }
 }
