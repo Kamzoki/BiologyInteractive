@@ -20,19 +20,25 @@ public class UIElement : MonoBehaviour {
     private bool isPressedBefore = false;
 
     //TODO Test undocumented functions
-    public void fn_LoadScene()
+    public void fn_LoadScene(bool isRestarting)
     {
-       int index = ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
-        if (index > -1)
+        if (isRestarting == false)
         {
-            SceneManager.LoadSceneAsync(index);
+            int index = ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
+            if (index > -1)
+            {
+                SceneManager.LoadSceneAsync(index);
+            }
+            else
+            {
+                Debug.Log("Transition Error");
+            }
         }
-        else 
+        else
         {
-            Debug.Log("Transition Error");
+            SceneManager.LoadSceneAsync()
         }
     }
-
     public void fn_LoadObject(bool disableObject)
     {
         m_ActivationObject.SetActive(true);
@@ -67,5 +73,11 @@ public class UIElement : MonoBehaviour {
                 m_AnimationComponent.Play(AnimationName);
             }
         }
+    }
+
+    public void fn_Exit()
+    {
+        m_SceneToLoad = ApplicationManager.AM.m_PreviousScene;
+        fn_LoadScene();
     }
 }
