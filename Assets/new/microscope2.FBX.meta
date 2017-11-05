@@ -1,22 +1,51 @@
 fileFormatVersion: 2
-guid: 5388b5ed77e0b0746a6484cbbd642216
-timeCreated: 1509324428
+guid: 5842e35b7f4a8b441b0460a47173bab1
+timeCreated: 1509844580
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cylinder001
-    100002: //RootNode
-    100004: OilTank001
-    400000: Cylinder001
-    400002: //RootNode
-    400004: OilTank001
-    2300000: Cylinder001
-    2300002: OilTank001
-    3300000: Cylinder001
-    3300002: OilTank001
-    4300000: Cylinder001
-    4300002: OilTank001
+    100000: Box001
+    100002: ChamferCyl009
+    100004: Cylinder002
+    100006: Cylinder007
+    100008: Cylinder009
+    100010: Group001
+    100012: //RootNode
+    100014: static part
+    100016: Tube007
+    100018: Tube013
+    400000: Box001
+    400002: ChamferCyl009
+    400004: Cylinder002
+    400006: Cylinder007
+    400008: Cylinder009
+    400010: Group001
+    400012: //RootNode
+    400014: static part
+    400016: Tube007
+    400018: Tube013
+    2300000: Box001
+    2300002: ChamferCyl009
+    2300004: Cylinder002
+    2300006: Cylinder007
+    2300008: Cylinder009
+    2300010: Tube007
+    2300012: Tube013
+    3300000: Box001
+    3300002: ChamferCyl009
+    3300004: Cylinder002
+    3300006: Cylinder007
+    3300008: Cylinder009
+    3300010: Tube007
+    3300012: Tube013
+    4300000: Cylinder009
+    4300002: Tube013
+    4300004: Cylinder007
+    4300006: Cylinder002
+    4300008: Box001
+    4300010: Tube007
+    4300012: ChamferCyl009
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -44,7 +73,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.1
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

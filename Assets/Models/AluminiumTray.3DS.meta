@@ -1,23 +1,15 @@
 fileFormatVersion: 2
-guid: 5388b5ed77e0b0746a6484cbbd642216
-timeCreated: 1509324428
+guid: da9b91caeaac1fa45a47f954b5f34ce2
+timeCreated: 1509908482
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cylinder001
-    100002: //RootNode
-    100004: OilTank001
-    400000: Cylinder001
-    400002: //RootNode
-    400004: OilTank001
-    2300000: Cylinder001
-    2300002: OilTank001
-    3300000: Cylinder001
-    3300002: OilTank001
-    4300000: Cylinder001
-    4300002: OilTank001
-    9500000: //RootNode
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: 606 Alumin
   materials:
     importMaterials: 1
     materialName: 0
@@ -82,7 +74,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
