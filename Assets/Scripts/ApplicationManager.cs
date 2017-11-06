@@ -15,9 +15,11 @@ public class ApplicationManager : MonoBehaviour {
     public string m_CurrentScene= "";
     [HideInInspector]
     public int m_CurrentScenesIndex = 0;
+    [HideInInspector]
+    public int m_SceneToLoadIndex = -1;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
         if (AM == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -34,7 +36,7 @@ public class ApplicationManager : MonoBehaviour {
         }
 	}
 
-    public int fn_TransferSceneData(string newScene)
+    public void fn_TransferSceneData(string newScene)
     {
         //Tested
         for (int i = 0; i < m_Scenes.Length; i++)
@@ -44,10 +46,9 @@ public class ApplicationManager : MonoBehaviour {
                 m_PreviousScene = m_CurrentScene;
                 m_CurrentScene = newScene;
                 m_CurrentScenesIndex = i;
-                return m_Scenes[i].m_SceneIndex;
+                m_SceneToLoadIndex =  m_Scenes[i].m_SceneIndex;
             }
         }
-        return -1;
     }
 }
 

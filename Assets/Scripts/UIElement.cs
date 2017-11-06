@@ -18,17 +18,16 @@ public class UIElement : MonoBehaviour {
 
     //private:
     private bool isPressedBefore = false;
-    private int SceneToLoadIndex = -1;
 
     public void fn_LoadScene(bool isRestarting)
     {
         //tested
         if (isRestarting == false)
         {
-            SceneToLoadIndex = ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
-            if (SceneToLoadIndex > -1)
+            ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
+            if (ApplicationManager.AM.m_SceneToLoadIndex > -1)
             {
-                SceneManager.LoadSceneAsync(SceneToLoadIndex);
+                SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
             }
             else
             {
@@ -37,7 +36,7 @@ public class UIElement : MonoBehaviour {
         }
         else
         {
-            SceneManager.LoadSceneAsync(SceneToLoadIndex);
+            SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
         }
     }
     public void fn_LoadObject(bool disableObject)
