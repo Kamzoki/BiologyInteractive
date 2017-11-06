@@ -5,16 +5,32 @@ using UnityEngine;
 public class Tool : MonoBehaviour {
 
     //private:
-    float newXPosition;
+    /*float newXPosition;
     float newYPosition;
     float cameraDistance;
+    */
+
+    //public:
+    public ToolType m_ToolType = ToolType.Beaker;
 
     private void Start()
     {
-        cameraDistance = (Camera.main.transform.position - gameObject.transform.position).magnitude;
+       // cameraDistance = (Camera.main.transform.position - gameObject.transform.position).magnitude;
     }
 
-    private void OnMouseDrag()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*private void OnMouseDrag()
     {
         LabManager.LM.fn_CheckMouseClick();
         if (gameObject.name == LabManager.LM.m_CurrentSelectedObject.name)
@@ -26,5 +42,5 @@ public class Tool : MonoBehaviour {
 
             gameObject.transform.position = newObjPosition;
         }
-    }
+    }*/
 }
