@@ -86,4 +86,9 @@ public class UIElement : MonoBehaviour {
             }
         }
     }
+
+    public void SwitchToolParent(bool isReadyTool)
+    {
+        GetComponentInParent<Tool>().fn_SwitchToolParent(isReadyTool);
+    }
 }

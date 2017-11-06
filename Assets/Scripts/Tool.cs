@@ -18,8 +18,14 @@ public class Tool : MonoBehaviour {
        // cameraDistance = (Camera.main.transform.position - gameObject.transform.position).magnitude;
     }
 
+    public void fn_SwitchToolParent(bool isReadyTool)
+    {
+        float originalZ = gameObject.transform.position.z;
+        gameObject.transform.parent = LabManager.LM.fn_GetTray(isReadyTool).transform;
+        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, originalZ);
+    }
     
-    
+    //TODO Establish button for switching tools between trays, test the functionality of tools switching and checktools.
     
     
     
