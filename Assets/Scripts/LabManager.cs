@@ -5,27 +5,89 @@ using UnityEngine;
 public class LabManager : MonoBehaviour
 {
 
-    //private:
+    /*//private:
     RaycastHit info;
-    Ray cameraRay;
-
+    Ray cameraRay;*/
+    private GameObject preToolTray;
+    private GameObject readToolTray;
+    
     //public:
     public static LabManager LM;
-    [HideInInspector]
-    public GameObject m_CurrentSelectedObject;
-    [HideInInspector]
-    public string[] m_RequiredTools;
+    public bool isBeganPractice = false;
 
-    private void Start()
+    [HideInInspector]
+    public List<GameObject> m_ReadyTools;
+
+    private void Awake()
     {
         LM = this;
-        if (ApplicationManager.AM.m_Labs != null)
+        m_ReadyTools = new List<GameObject>();
+        if (ApplicationManager.AM != null)
         {
-            CopyRequiredTools();
+            GetTrays();
         }
     }
 
-    public void fn_CheckMouseClick()
+    private void GetTrays()
+    {
+        if (ApplicationManager.AM.m_CurrentScene != "")
+        {
+            switch (ApplicationManager.AM.m_CurrentScene)
+            {
+                case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readToolTray = GameObject.Find("CarbReadyTray"); break;
+
+                default: Debug.Log("NothingFough"); break;
+            }
+        }
+    }
+
+    public bool fn_CheckReadyTools()
+    {
+        int successCounter = 0;
+        if (m_ReadyTools.Capacity == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools.Length)
+        {
+            for (int i = 0; i < m_ReadyTools.Capacity; i++)
+            {
+                for (int j = 0; j < m_ReadyTools.Capacity; j++)
+                {
+                    if (m_ReadyTools[i].GetComponent<Tool>().m_ToolType == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools[j])
+                    {
+                        successCounter++;
+                        break;
+                    }
+                }
+            }
+
+            if (successCounter == m_ReadyTools.Capacity)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*public void fn_CheckMouseClick()
     {
         //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
         if (Input.GetKey(KeyCode.Mouse0))
@@ -54,5 +116,5 @@ public class LabManager : MonoBehaviour
         {
             m_RequiredTools[i] = ApplicationManager.AM.m_Labs[ApplicationManager.AM.m_CurrentLabIndex].m_RequiredTools[i];
         }
-    }
+    }*/
 }
