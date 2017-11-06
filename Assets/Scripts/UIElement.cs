@@ -19,15 +19,15 @@ public class UIElement : MonoBehaviour {
     //private:
     private bool isPressedBefore = false;
 
-    //TODO Test undocumented functions
     public void fn_LoadScene(bool isRestarting)
     {
+        //tested
         if (isRestarting == false)
         {
-            int index = ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
-            if (index > -1)
+            ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
+            if (ApplicationManager.AM.m_SceneToLoadIndex > -1)
             {
-                SceneManager.LoadSceneAsync(index);
+                SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
             }
             else
             {
@@ -36,7 +36,7 @@ public class UIElement : MonoBehaviour {
         }
         else
         {
-            //SceneManager.LoadSceneAsync()
+            SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
         }
     }
     public void fn_LoadObject(bool disableObject)
@@ -75,9 +75,15 @@ public class UIElement : MonoBehaviour {
         }
     }
 
-    public void fn_Exit()
+    public void CheckTools()
     {
-        m_SceneToLoad = ApplicationManager.AM.m_PreviousScene;
-        //fn_LoadScene();
+        if (LabManager.LM != null)
+        {
+            if (LabManager.LM.fn_CheckReadyTools() == true)
+            {
+                LabManager.LM.isBeganPractice = true;
+                Debug.Log("Let's Rock");
+            }
+        }
     }
 }

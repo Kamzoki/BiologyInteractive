@@ -6,20 +6,20 @@ public class ApplicationManager : MonoBehaviour {
 
     //public:
     public static ApplicationManager AM;
-    //TODO populate this list.
-    public List<Lab> m_Labs;
+//    public List<Lab> m_Labs;
     public SceneData[] m_Scenes;
 
     [HideInInspector]
-    public string m_PreviousScene;
+    public string m_PreviousScene = "";
     [HideInInspector]
-    public string m_CurrentScene;
-
+    public string m_CurrentScene= "";
     [HideInInspector]
-    public int m_CurrentLabIndex = 0;
+    public int m_CurrentScenesIndex = 0;
+    [HideInInspector]
+    public int m_SceneToLoadIndex = -1;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
         if (AM == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -36,31 +36,37 @@ public class ApplicationManager : MonoBehaviour {
         }
 	}
 
-    public int fn_TransferSceneData(string newScene)
+    public void fn_TransferSceneData(string newScene)
     {
+        //Tested
         for (int i = 0; i < m_Scenes.Length; i++)
         {
             if (m_Scenes[i].m_SceneName == newScene)
             {
                 m_PreviousScene = m_CurrentScene;
                 m_CurrentScene = newScene;
-                return m_Scenes[i].m_SceneIndex;
+                m_CurrentScenesIndex = i;
+                m_SceneToLoadIndex =  m_Scenes[i].m_SceneIndex;
             }
         }
-        return -1;
     }
 }
 
-[System.Serializable]
+/*[System.Serializable]
 public struct Lab
 {
     public string m_LabTitle;
     public string[] m_RequiredTools;
-}
+}*/
 
 [System.Serializable]
 public struct SceneData
 {
     public string m_SceneName;
     public int m_SceneIndex;
+    public bool isLabScene;
+    public ToolType[] m_RequiredTools;
 }
+
+public enum ToolType {Beaker, Bunsen_Burner, Dropper, Container_Jar, Container_Sample, Container_Solution, MircoScope_GlassSection, MircoScope, Mortar_Pestle, Scalple, TestingTubes_Rack, TestingTube,
+                      Thermometer, Tongs}
