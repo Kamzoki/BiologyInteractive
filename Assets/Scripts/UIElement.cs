@@ -19,9 +19,10 @@ public class UIElement : MonoBehaviour {
     //private:
     private bool isPressedBefore = false;
     private int SceneToLoadIndex = -1;
-    //TODO Test undocumented functions
+
     public void fn_LoadScene(bool isRestarting)
     {
+        //tested
         if (isRestarting == false)
         {
             SceneToLoadIndex = ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
@@ -71,6 +72,18 @@ public class UIElement : MonoBehaviour {
             else
             {
                 m_AnimationComponent.Play(AnimationName);
+            }
+        }
+    }
+
+    public void CheckTools()
+    {
+        if (LabManager.LM != null)
+        {
+            if (LabManager.LM.fn_CheckReadyTools() == true)
+            {
+                LabManager.LM.isBeganPractice = true;
+                Debug.Log("Let's Rock");
             }
         }
     }

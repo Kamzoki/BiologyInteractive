@@ -13,8 +13,9 @@ public class LabManager : MonoBehaviour
     
     //public:
     public static LabManager LM;
-    public bool isBeganPractice = false;
 
+    [HideInInspector]
+    public bool isBeganPractice = false;
     [HideInInspector]
     public List<GameObject> m_ReadyTools;
 
@@ -30,13 +31,14 @@ public class LabManager : MonoBehaviour
 
     private void GetTrays()
     {
+        //Tested
         if (ApplicationManager.AM.m_CurrentScene != "")
         {
             switch (ApplicationManager.AM.m_CurrentScene)
             {
                 case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readToolTray = GameObject.Find("CarbReadyTray"); break;
 
-                default: Debug.Log("NothingFough"); break;
+                default: Debug.Log("NothingFound"); break;
             }
         }
     }
@@ -109,7 +111,6 @@ public class LabManager : MonoBehaviour
 
     private void CopyRequiredTools()
     {
-        //TODO test the function.
         //This function reformate the requried tools for each lab and assign the correct requried tools from the local database in ApplicationManager.
         m_RequiredTools = new string[ApplicationManager.AM.m_Labs[ApplicationManager.AM.m_CurrentLabIndex].m_RequiredTools.Length];
         for (int i = 0; i < m_RequiredTools.Length; i++)
