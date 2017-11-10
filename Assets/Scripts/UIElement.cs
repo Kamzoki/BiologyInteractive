@@ -89,6 +89,9 @@ public class UIElement : MonoBehaviour {
 
     public void SwitchToolParent(bool isReadyTool)
     {
+        Debug.Log("Working");
         GetComponentInParent<Tool>().fn_SwitchToolParent(isReadyTool);
+        gameObject.SetActive(false);
+        m_ActivationObject.SetActive(true);
     }
 }

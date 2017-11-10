@@ -9,9 +9,11 @@ public class Tool : MonoBehaviour {
     float newYPosition;
     float cameraDistance;
     */
-
+    private bool isToolCanvasActive = false;
     //public:
     public ToolType m_ToolType = ToolType.Beaker;
+
+    public GameObject m_ToolCanvas;
 
     private void Start()
     {
@@ -24,18 +26,26 @@ public class Tool : MonoBehaviour {
         gameObject.transform.parent = LabManager.LM.fn_GetTray(isReadyTool).transform;
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, originalZ);
     }
-    
+
     //TODO Establish button for switching tools between trays, test the functionality of tools switching and checktools.
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    private void OnMouseUp()
+    {
+        if (m_ToolCanvas != null)
+        {
+            isToolCanvasActive = !isToolCanvasActive;
+            m_ToolCanvas.SetActive(isToolCanvasActive);
+        }
+    }
+
+
+
+
+
+
+
+
+
     /*private void OnMouseDrag()
     {
         LabManager.LM.fn_CheckMouseClick();
