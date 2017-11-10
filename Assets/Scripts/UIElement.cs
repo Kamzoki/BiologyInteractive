@@ -9,8 +9,8 @@ public class UIElement : MonoBehaviour {
     //public:
     public string m_SceneToLoad;
 
-    public GameObject m_ActivationObject;
-    public GameObject m_DisableObject;
+    public GameObject[] m_ActivationObjects;
+    public GameObject[] m_DisableObjects;
 
     public Animation m_AnimationComponent;
     public string m_AnotherAnimation;
@@ -41,14 +41,23 @@ public class UIElement : MonoBehaviour {
     }
     public void fn_LoadObject(bool disableObject)
     {
-        m_ActivationObject.SetActive(true);
+        if (m_ActivationObjects != null)
+        {
+            for (int i = 0; i < m_ActivationObjects.Length; i++)
+            {
+                m_ActivationObjects[i].SetActive(true);
+            }
+        }
         if (disableObject == true)
         {
-            if (m_DisableObject == null)
+            if (m_DisableObjects != null)
             {
-                m_DisableObject = gameObject;
+                for (int i = 0; i < m_DisableObjects.Length; i++)
+                {
+                    m_DisableObjects[i].SetActive(false);
+                }
             }
-            m_DisableObject.SetActive(false);
+            
         }
     }
 
@@ -92,6 +101,6 @@ public class UIElement : MonoBehaviour {
         Debug.Log("Working");
         GetComponentInParent<Tool>().fn_SwitchToolParent(isReadyTool);
         gameObject.SetActive(false);
-        m_ActivationObject.SetActive(true);
+        //m_ActivationObject.SetActive(true);
     }
 }
