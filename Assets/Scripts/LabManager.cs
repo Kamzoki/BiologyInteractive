@@ -9,7 +9,7 @@ public class LabManager : MonoBehaviour
     RaycastHit info;
     Ray cameraRay;*/
     private GameObject preToolTray;
-    private GameObject readToolTray;
+    private GameObject readyToolTray;
     
     //public:
     public static LabManager LM;
@@ -36,7 +36,7 @@ public class LabManager : MonoBehaviour
         {
             switch (ApplicationManager.AM.m_CurrentScene)
             {
-                case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readToolTray = GameObject.Find("CarbReadyTray"); break;
+                case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readyToolTray = GameObject.Find("CarbReadyTray"); break;
 
                 default: Debug.Log("NothingFound"); break;
             }
@@ -76,7 +76,17 @@ public class LabManager : MonoBehaviour
         }
     }
 
-
+    public GameObject fn_GetTray(bool isReady)
+    {
+        if (isReady == true)
+        {
+            return readyToolTray;
+        }
+        else
+        {
+            return preToolTray;
+        }
+    }
 
 
 
