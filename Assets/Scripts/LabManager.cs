@@ -5,19 +5,22 @@ using UnityEngine;
 public class LabManager : MonoBehaviour
 {
 
-    /*//private:
+    //private:
     RaycastHit info;
-    Ray cameraRay;*/
+    Ray cameraRay;
     private GameObject preToolTray;
     private GameObject readyToolTray;
     
     //public:
     public static LabManager LM;
 
+    public GameObject SelectedEffect;
     [HideInInspector]
     public bool isBeganPractice = false;
     [HideInInspector]
     public List<GameObject> m_ReadyTools;
+    [HideInInspector]
+    public GameObject m_CurrentSelectedTool;
 
     private void Awake()
     {
@@ -25,11 +28,19 @@ public class LabManager : MonoBehaviour
         m_ReadyTools = new List<GameObject>();
         if (ApplicationManager.AM != null)
         {
-            GetTrays();
+            AssignTrays();
         }
     }
 
-    private void GetTrays()
+    private void Update()
+    {
+        if (m_CurrentSelectedTool != null)
+        {
+            CheckMouseClick();
+        }
+    }
+
+    private void AssignTrays()
     {
         //Tested
         if (ApplicationManager.AM.m_CurrentScene != "")
@@ -39,6 +50,39 @@ public class LabManager : MonoBehaviour
                 case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readyToolTray = GameObject.Find("CarbReadyTray"); break;
 
                 default: Debug.Log("NothingFound"); break;
+            }
+        }
+    }
+
+    private void ResetCurrentSelectedTool()
+    {
+        m_CurrentSelectedTool = null;
+        Debug.Log("Null");
+        if (SelectedEffect != null)
+        {
+            SelectedEffect.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Please Assign selected effect");
+        }
+    }
+
+    private void CheckMouseClick()
+    {
+        //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            Debug.Log("ChecMouseClick");
+            cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);            
+            if (Physics.Raycast(cameraRay, out info))
+            {
+                Debug.DrawRay(cameraRay.origin, cameraRay.direction, Color.red);
+                if (info.collider.gameObject.tag != "Tool")
+                {
+                    Debug.Log("No tool found");
+                    ResetCurrentSelectedTool();
+                }
             }
         }
     }
@@ -88,37 +132,34 @@ public class LabManager : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    /*public void fn_CheckMouseClick()
+    public void fn_SelectTool(GameObject tool)
     {
-        //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
-        if (Input.GetKey(KeyCode.Mouse0))
+        m_CurrentSelectedTool = tool;
+        if (SelectedEffect != null)
         {
-            cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(cameraRay, out info))
-            {
-                if (info.collider.gameObject.tag == "Tool")
-                {
-                    m_CurrentSelectedObject = info.collider.gameObject;
-                }
-            }
+            SelectedEffect.transform.parent = m_CurrentSelectedTool.transform;
+            SelectedEffect.transform.position = new Vector3(0, 0, 0);
+            SelectedEffect.SetActive(true);
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        else
         {
-            m_CurrentSelectedObject = null;
+            Debug.Log("Please Assign selected effect");
         }
     }
-
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     private void CopyRequiredTools()
     {
         //This function reformate the requried tools for each lab and assign the correct requried tools from the local database in ApplicationManager.
