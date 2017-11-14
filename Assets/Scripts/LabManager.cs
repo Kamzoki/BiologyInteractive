@@ -48,7 +48,7 @@ public class LabManager : MonoBehaviour
         {
             switch (ApplicationManager.AM.m_CurrentScene)
             {
-                case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readyToolTray = GameObject.Find("CarbReadyTray"); break;
+                case "Detecting Sugar": preToolTray = GameObject.Find("CarbPreTray"); readyToolTray = GameObject.Find("CarbReadyTray"); break;
 
                 default: Debug.Log("NothingFound"); break;
             }

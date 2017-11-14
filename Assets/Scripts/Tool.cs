@@ -19,6 +19,7 @@ public class Tool : MonoBehaviour {
     public void fn_SwitchToolParent(bool isReadyTool)
     {
         gameObject.transform.parent = LabManager.LM.fn_GetTray(isReadyTool).transform;
+        Debug.Log(originalZ); //TODO change this functionality.
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, originalZ);
     }
 
