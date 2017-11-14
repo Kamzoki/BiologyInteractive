@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LabManager : MonoBehaviour
 {
@@ -57,14 +58,13 @@ public class LabManager : MonoBehaviour
     private void ResetCurrentSelectedTool()
     {
         m_CurrentSelectedTool = null;
-        Debug.Log("Null");
         if (SelectedEffect != null)
         {
             SelectedEffect.SetActive(false);
         }
         else
         {
-            Debug.Log("Please Assign selected effect");
+            Debug.Log("No Selected Effect found");
         }
     }
 
@@ -73,14 +73,12 @@ public class LabManager : MonoBehaviour
         //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
         if (Input.GetKey(KeyCode.Mouse0))
         {
-            Debug.Log("ChecMouseClick");
-            cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);            
-            if (Physics.Raycast(cameraRay, out info))
+            cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(cameraRay.origin, cameraRay.direction * 10, Color.red);
+            if (EventSystem.current.currentSelectedGameObject == null)
             {
-                Debug.DrawRay(cameraRay.origin, cameraRay.direction, Color.red);
-                if (info.collider.gameObject.tag != "Tool")
+                if (Physics.Raycast(cameraRay, 10f) == false)
                 {
-                    Debug.Log("No tool found");
                     ResetCurrentSelectedTool();
                 }
             }
