@@ -15,7 +15,14 @@ public class LabManager : MonoBehaviour
     //public:
     public static LabManager LM;
 
-    public GameObject SelectedEffect;
+    public GameObject m_SelectedEffect;
+
+    //Lab UI Dynamic Elements.
+    public GameObject m_PrepareButton;
+    public GameObject m_BackButton;
+    public GameObject m_UseButton;
+    public GameObject m_EmptyButton;
+
     [HideInInspector]
     public bool isBeganPractice = false;
     [HideInInspector]
@@ -30,6 +37,10 @@ public class LabManager : MonoBehaviour
         if (ApplicationManager.AM != null)
         {
             AssignTrays();
+            if (m_PrepareButton == null || m_BackButton == null)
+            {
+                Debug.Log("Assign UI buttons to LabManager");
+            }
         }
     }
 
@@ -58,9 +69,11 @@ public class LabManager : MonoBehaviour
     private void ResetCurrentSelectedTool()
     {
         m_CurrentSelectedTool = null;
-        if (SelectedEffect != null)
+        m_PrepareButton.SetActive(true);
+        m_BackButton.SetActive(false);
+        if (m_SelectedEffect != null)
         {
-            SelectedEffect.SetActive(false);
+            m_SelectedEffect.SetActive(false);
         }
         else
         {
@@ -88,11 +101,11 @@ public class LabManager : MonoBehaviour
     public bool fn_CheckReadyTools()
     {
         int successCounter = 0;
-        if (m_ReadyTools.Capacity == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools.Length)
+        if (m_ReadyTools.Count == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools.Length)
         {
-            for (int i = 0; i < m_ReadyTools.Capacity; i++)
+            for (int i = 0; i < m_ReadyTools.Count; i++)
             {
-                for (int j = 0; j < m_ReadyTools.Capacity; j++)
+                for (int j = 0; j < m_ReadyTools.Count; j++)
                 {
                     if (m_ReadyTools[i].GetComponent<Tool>().m_ToolType == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools[j])
                     {
@@ -102,7 +115,7 @@ public class LabManager : MonoBehaviour
                 }
             }
 
-            if (successCounter == m_ReadyTools.Capacity)
+            if (successCounter == m_ReadyTools.Count)
             {
                 return true;
             }
@@ -132,39 +145,17 @@ public class LabManager : MonoBehaviour
 
     public void fn_SelectTool(GameObject tool)
     {
+        ResetCurrentSelectedTool();
         m_CurrentSelectedTool = tool;
-        if (SelectedEffect != null)
+        if (m_SelectedEffect != null)
         {
-            SelectedEffect.transform.parent = m_CurrentSelectedTool.transform;
-            SelectedEffect.transform.position = new Vector3(0, 0, 0);
-            SelectedEffect.SetActive(true);
+            m_SelectedEffect.transform.parent = m_CurrentSelectedTool.transform;
+            m_SelectedEffect.transform.position = new Vector3(0, 0, 0);
+            m_SelectedEffect.SetActive(true);
         }
         else
         {
             Debug.Log("Please Assign selected effect");
         }
     }
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    private void CopyRequiredTools()
-    {
-        //This function reformate the requried tools for each lab and assign the correct requried tools from the local database in ApplicationManager.
-        m_RequiredTools = new string[ApplicationManager.AM.m_Labs[ApplicationManager.AM.m_CurrentLabIndex].m_RequiredTools.Length];
-        for (int i = 0; i < m_RequiredTools.Length; i++)
-        {
-            m_RequiredTools[i] = ApplicationManager.AM.m_Labs[ApplicationManager.AM.m_CurrentLabIndex].m_RequiredTools[i];
-        }
-    }*/
 }

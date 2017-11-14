@@ -102,7 +102,7 @@ public class UIElement : MonoBehaviour {
         {
             if (LabManager.LM.m_CurrentSelectedTool != null)
             {
-                Debug.Log("Working");
+                
                 LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_SwitchToolParent(isReadyTool);
                 m_ActivationObjects[0].SetActive(true);
                 gameObject.SetActive(false);
