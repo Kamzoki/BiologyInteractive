@@ -19,7 +19,7 @@ public class UIElement : MonoBehaviour {
     //private:
     private bool isPressedBefore = false;
 
-    public void fn_LoadScene(bool isRestarting)
+    public void fn_LoadLabScene(bool isRestarting)
     {
         //tested
         if (isRestarting == false)
@@ -98,9 +98,15 @@ public class UIElement : MonoBehaviour {
 
     public void SwitchToolParent(bool isReadyTool)
     {
-        Debug.Log("Working");
-        GetComponentInParent<Tool>().fn_SwitchToolParent(isReadyTool);
-        gameObject.SetActive(false);
-        //m_ActivationObject.SetActive(true);
+        if (LabManager.LM != null)
+        {
+            if (LabManager.LM.m_CurrentSelectedTool != null)
+            {
+                
+                LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_SwitchToolParent(isReadyTool);
+                m_ActivationObjects[0].SetActive(true);
+                gameObject.SetActive(false);
+            }
+        }
     }
 }

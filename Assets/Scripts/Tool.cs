@@ -5,58 +5,37 @@ using UnityEngine;
 public class Tool : MonoBehaviour {
 
     //private:
-    /*float newXPosition;
-    float newYPosition;
-    float cameraDistance;
-    */
-    private bool isToolCanvasActive = false;
+    Vector3 originalPosition;
     //public:
     public ToolType m_ToolType = ToolType.Beaker;
 
-    public GameObject m_ToolCanvas;
 
     private void Start()
     {
-       // cameraDistance = (Camera.main.transform.position - gameObject.transform.position).magnitude;
+        originalPosition = gameObject.transform.position;
     }
 
     public void fn_SwitchToolParent(bool isReadyTool)
     {
-        float originalZ = gameObject.transform.position.z;
         gameObject.transform.parent = LabManager.LM.fn_GetTray(isReadyTool).transform;
-        gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, originalZ);
+        if (isReadyTool == true)
+        {
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, (gameObject.transform.position.z - LabManager.LM.fn_GetTray(!isReadyTool).transform.localScale.z) + (LabManager.LM.fn_GetTray(!isReadyTool).transform.position.z + 0.5f) );
+            LabManager.LM.m_ReadyTools.Add(gameObject);
+        }
+        else
+        {
+            gameObject.transform.position = originalPosition;
+            LabManager.LM.m_ReadyTools.Remove(gameObject);
+        }
+        Debug.Log(LabManager.LM.m_ReadyTools.Count);
     }
-
-    //TODO Establish button for switching tools between trays, test the functionality of tools switching and checktools.
 
     private void OnMouseUp()
     {
-        if (m_ToolCanvas != null)
+        if (LabManager.LM != null)
         {
-            isToolCanvasActive = !isToolCanvasActive;
-            m_ToolCanvas.SetActive(isToolCanvasActive);
+            LabManager.LM.fn_SelectTool(gameObject);
         }
     }
-
-
-
-
-
-
-
-
-
-    /*private void OnMouseDrag()
-    {
-        LabManager.LM.fn_CheckMouseClick();
-        if (gameObject.name == LabManager.LM.m_CurrentSelectedObject.name)
-        {
-            newXPosition = Input.mousePosition.x;
-            newYPosition = Input.mousePosition.y;
-            Vector3 mousePosition = new Vector3(newXPosition, newYPosition, cameraDistance);
-            Vector3 newObjPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-            gameObject.transform.position = newObjPosition;
-        }
-    }*/
 }
