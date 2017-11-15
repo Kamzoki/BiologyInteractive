@@ -73,5 +73,6 @@ public struct Missions
 
 }
 
-public enum ToolType {Beaker, Bunsen_Burner, Dropper, Container_Jar, Container_Sample, Container_Solution, MircoScope_GlassSection, MircoScope, Mortar_Pestle, Scalple, TestingTubes_Rack, TestingTube,
-                      Thermometer, Tongs}
+public enum ToolType {Beaker, Bunsen_Burner, Dropper, Container_Sample, MircoScope_GlassSection, MircoScope, Mortar_Pestle, Scalple, TestingTubes_Rack, TestingTube,
+                      Thermometer, Tongs, Iodine_Solution, Glucose_Solution, Starch_Solution, Egg_Yolk, Distilled_Water, Benedict_Reagent, Peas_Seeds_Container, Tomatoes_Container,
+                      Wheat_Seeds_Container, Bread_Pieces_Container}
