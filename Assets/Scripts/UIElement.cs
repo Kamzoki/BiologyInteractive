@@ -15,22 +15,24 @@ public class UIElement : MonoBehaviour {
     public Animation m_AnimationComponent;
     public string m_AnotherAnimation;
     public bool playMultiAnimations;
-
-    public enum Functions { LoadLabScene, LoadObject, StartAnimation};
-    public Functions m_FunctionToCall = Functions.LoadObject;
-    public bool isTrueParameter;
-    public GameObject[] OtherScript;
+    public bool resetAnimations = false;
 
     //private:
     private bool isPressedBefore = false;
-    private bool isCalledExternally = false;
-    private UIElement externalScript;
 
+
+    private void OnEnable()
+    {
+        if (resetAnimations == true)
+        {
+            m_AnimationComponent.Play("Carbs module Reseting animation");
+           /* m_AnimationComponent[""].enabled = false;
+            m_AnimationComponent[""].enabled = false;*/
+        }
+    }
     public void fn_LoadLabScene(bool isRestarting)
     {
         //tested
-        if (isCalledExternally == false)
-        {
             if (isRestarting == false)
             {
                 ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
@@ -52,16 +54,9 @@ public class UIElement : MonoBehaviour {
             {
                 m_ActivationObjects[0].SetActive(true);
             }
-        }
-        else
-        {
-            externalScript.fn_LoadLabScene(isRestarting);
-        }
     }
     public void fn_LoadObject(bool disableObject)
     {
-        if (isCalledExternally == false)
-        {
             if (m_ActivationObjects != null)
             {
                 for (int i = 0; i < m_ActivationObjects.Length; i++)
@@ -80,19 +75,14 @@ public class UIElement : MonoBehaviour {
                 }
 
             }
-        }
-        else
-        {
-            externalScript.fn_LoadObject(disableObject);
-        }
     }
 
     public void fn_StartAnimation(string AnimationName)
     {
-        if (isCalledExternally == false)
         {
             if (m_AnimationComponent != null)
             {
+                m_AnimationComponent.enabled = true;
                 if (playMultiAnimations == true)
                 {
                     if (isPressedBefore == false)
@@ -110,10 +100,6 @@ public class UIElement : MonoBehaviour {
                     m_AnimationComponent.Play(AnimationName);
                 }
             }
-        }
-        else
-        {
-            externalScript.fn_StartAnimation(AnimationName);
         }
     }
 
@@ -140,24 +126,6 @@ public class UIElement : MonoBehaviour {
                 m_ActivationObjects[0].SetActive(true);
                 gameObject.SetActive(false);
             }
-        }
-    }
-
-    public void fn_CallOtherUIFunction (int OtherScriptIndex) {
-
-        isCalledExternally = true;
-        externalScript = OtherScript[OtherScriptIndex].GetComponent<UIElement>();
-
-        switch (m_FunctionToCall)
-        {
-            case Functions.LoadLabScene: fn_LoadLabScene(isTrueParameter);
-                break;
-            case Functions.LoadObject: fn_LoadObject(isTrueParameter);
-                break;
-            case Functions.StartAnimation: fn_StartAnimation(m_AnotherAnimation);
-                break;
-            default: Debug.Log("Error enum");
-                break;
         }
     }
 
