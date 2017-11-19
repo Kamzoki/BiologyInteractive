@@ -35,7 +35,72 @@ public class Tool : MonoBehaviour {
     {
         if (LabManager.LM != null)
         {
-            LabManager.LM.fn_SelectTool(gameObject);
+            if (LabManager.LM.m_LabState == LabState.Idle)
+            {
+                LabManager.LM.fn_SelectTool(gameObject);
+            }
+            else
+            {
+                Mission thisMission = ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].
+                    m_Missions[ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex];
+
+                if (m_ToolType == thisMission.m_NextNeededTool && LabManager.LM.m_LabState == thisMission.m_ExpectedAction)
+                {
+                    switch (m_ToolType)
+                    {
+                        case ToolType.Beaker:
+                            break;
+                        case ToolType.Bunsen_Burner:
+                            break;
+                        case ToolType.Dropper:
+                            break;
+                        case ToolType.Container_Sample:
+                            break;
+                        case ToolType.MircoScope_GlassSection:
+                            break;
+                        case ToolType.MircoScope:
+                            break;
+                        case ToolType.Mortar_Pestle:
+                            break;
+                        case ToolType.Scalple:
+                            break;
+                        case ToolType.TestingTubes_Rack:
+                            break;
+                        case ToolType.TestingTube:
+                            break;
+                        case ToolType.Thermometer:
+                            break;
+                        case ToolType.Tongs:
+                            break;
+                        case ToolType.Iodine_Solution:
+                            break;
+                        case ToolType.Glucose_Solution:
+                            break;
+                        case ToolType.Starch_Solution:
+                            break;
+                        case ToolType.Egg_Yolk:
+                            break;
+                        case ToolType.Distilled_Water:
+                            break;
+                        case ToolType.Benedict_Reagent:
+                            break;
+                        case ToolType.Peas_Seeds_Container:
+                            break;
+                        case ToolType.Tomatoes_Container:
+                            break;
+                        case ToolType.Wheat_Seeds_Container:
+                            break;
+                        case ToolType.Bread_Pieces_Container:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Wrong step");
+                }
+            }
         }
     }
 }
