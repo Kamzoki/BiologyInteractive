@@ -14,6 +14,7 @@ public class LabManager : MonoBehaviour
     
     //public:
     public static LabManager LM;
+    public LabState m_LabState = LabState.Idle;
 
     public GameObject m_SelectedEffect;
 
@@ -159,3 +160,5 @@ public class LabManager : MonoBehaviour
         }
     }
 }
+
+public enum LabState { UsingItem, EmptyingItem, UsingMicrosope, Idle};

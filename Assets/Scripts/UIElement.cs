@@ -15,76 +15,95 @@ public class UIElement : MonoBehaviour {
     public Animation m_AnimationComponent;
     public string m_AnotherAnimation;
     public bool playMultiAnimations;
+    public bool resetAnimations = false;
 
     //private:
     private bool isPressedBefore = false;
 
+
+    private void OnEnable()
+    {
+        if (resetAnimations == true)
+        {
+            m_AnimationComponent.Play("Carbs module Reseting animation");
+           /* m_AnimationComponent[""].enabled = false;
+            m_AnimationComponent[""].enabled = false;*/
+        }
+    }
     public void fn_LoadLabScene(bool isRestarting)
     {
         //tested
-        if (isRestarting == false)
-        {
-            ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
-            if (ApplicationManager.AM.m_SceneToLoadIndex > -1)
+            if (isRestarting == false)
             {
-                SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
+                ApplicationManager.AM.fn_TransferSceneData(m_SceneToLoad);
+                if (ApplicationManager.AM.m_SceneToLoadIndex > -1)
+                {
+                    SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
+                }
+                else
+                {
+                    Debug.Log("Transition Error");
+                }
             }
             else
             {
-                Debug.Log("Transition Error");
+                SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
             }
-        }
-        else
-        {
-            SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
-        }
+
+            if (m_ActivationObjects != null)
+            {
+                m_ActivationObjects[0].SetActive(true);
+            }
     }
     public void fn_LoadObject(bool disableObject)
     {
-        if (m_ActivationObjects != null)
-        {
-            for (int i = 0; i < m_ActivationObjects.Length; i++)
+            if (m_ActivationObjects != null)
             {
-                m_ActivationObjects[i].SetActive(true);
-            }
-        }
-        if (disableObject == true)
-        {
-            if (m_DisableObjects != null)
-            {
-                for (int i = 0; i < m_DisableObjects.Length; i++)
+                for (int i = 0; i < m_ActivationObjects.Length; i++)
                 {
-                    m_DisableObjects[i].SetActive(false);
+                    m_ActivationObjects[i].SetActive(true);
                 }
             }
-            
-        }
+            if (disableObject == true)
+            {
+                if (m_DisableObjects != null)
+                {
+                    for (int i = 0; i < m_DisableObjects.Length; i++)
+                    {
+                        m_DisableObjects[i].SetActive(false);
+                    }
+                }
+
+            }
     }
 
     public void fn_StartAnimation(string AnimationName)
     {
-        if (m_AnimationComponent != null)
         {
-            if (playMultiAnimations == true)
+            if (m_AnimationComponent != null)
             {
-                if (isPressedBefore == false)
+                m_AnimationComponent.enabled = true;
+                if (playMultiAnimations == true)
                 {
-                    m_AnimationComponent.Play(AnimationName);
+                    if (isPressedBefore == false)
+                    {
+                        m_AnimationComponent.Play(AnimationName);
+                    }
+                    else
+                    {
+                        m_AnimationComponent.Play(m_AnotherAnimation);
+                    }
+                    isPressedBefore = !isPressedBefore;
                 }
                 else
                 {
-                    m_AnimationComponent.Play(m_AnotherAnimation);
+                    m_AnimationComponent.Play(AnimationName);
                 }
-                isPressedBefore = !isPressedBefore;
-            }
-            else
-            {
-                m_AnimationComponent.Play(AnimationName);
             }
         }
     }
 
-    public void CheckTools()
+    public void fn_CheckTools()
     {
         if (LabManager.LM != null)
         {
@@ -96,7 +115,7 @@ public class UIElement : MonoBehaviour {
         }
     }
 
-    public void SwitchToolParent(bool isReadyTool)
+    public void fn_SwitchToolParent(bool isReadyTool)
     {
         if (LabManager.LM != null)
         {
@@ -107,6 +126,25 @@ public class UIElement : MonoBehaviour {
                 m_ActivationObjects[0].SetActive(true);
                 gameObject.SetActive(false);
             }
+        }
+    }
+
+    public void fn_UseItem_EmptyItem(bool isUseItem)
+    {
+        if (LabManager.LM != null)
+        {
+            if (isUseItem == true)
+            {
+                LabManager.LM.m_LabState = LabState.UsingItem;
+            }
+            else
+            {
+                LabManager.LM.m_LabState = LabState.EmptyingItem;
+            }
+        }
+        else
+        {
+            Debug.Log("LabManager is null");
         }
     }
 }
