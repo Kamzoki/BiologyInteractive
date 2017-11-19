@@ -52,13 +52,6 @@ public class ApplicationManager : MonoBehaviour {
     }
 }
 
-/*[System.Serializable]
-public struct Lab
-{
-    public string m_LabTitle;
-    public string[] m_RequiredTools;
-}*/
-
 [System.Serializable]
 public struct SceneData
 {
@@ -66,7 +59,23 @@ public struct SceneData
     public int m_SceneIndex;
     public bool isLabScene;
     public ToolType[] m_RequiredTools;
+    public Mission[] m_Missions;
+    public int LastMissionIndex;
 }
 
-public enum ToolType {Beaker, Bunsen_Burner, Dropper, Container_Jar, Container_Sample, Container_Solution, MircoScope_GlassSection, MircoScope, Mortar_Pestle, Scalple, TestingTubes_Rack, TestingTube,
-                      Thermometer, Tongs}
+[System.Serializable]
+public struct Mission
+{
+    //TODO populate missions of the two lab scenes needed as Nehal's note. Implement a global index to missions, with each click on a lab tool, check if the lab tool type matches the next lab tool accroding to the global index.
+    public string m_MissionDescription;
+    public ToolType m_CurrentNeededTool;
+    public ToolType m_NextNeededTool;
+    public LabState m_ExpectedAction;
+    [HideInInspector]
+    public bool isDone;
+
+}
+
+public enum ToolType {Beaker, Bunsen_Burner, Dropper, Container_Sample, MircoScope_GlassSection, MircoScope, Mortar_Pestle, Scalple, TestingTubes_Rack, TestingTube,
+                      Thermometer, Tongs, Iodine_Solution, Glucose_Solution, Starch_Solution, Egg_Yolk, Distilled_Water, Benedict_Reagent, Peas_Seeds_Container, Tomatoes_Container,
+                      Wheat_Seeds_Container, Bread_Pieces_Container}

@@ -1,23 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LabManager : MonoBehaviour
 {
 
-    /*//private:
+    //private:
     RaycastHit info;
-    Ray cameraRay;*/
+    Ray cameraRay;
     private GameObject preToolTray;
-    private GameObject readToolTray;
+    private GameObject readyToolTray;
     
     //public:
     public static LabManager LM;
+    public LabState m_LabState = LabState.Idle;
+
+    public GameObject m_SelectedEffect;
+
+    //Lab UI Dynamic Elements.
+    public GameObject m_PrepareButton;
+    public GameObject m_BackButton;
+    public GameObject m_UseButton;
+    public GameObject m_EmptyButton;
 
     [HideInInspector]
     public bool isBeganPractice = false;
     [HideInInspector]
     public List<GameObject> m_ReadyTools;
+    [HideInInspector]
+    public GameObject m_CurrentSelectedTool;
 
     private void Awake()
     {
@@ -25,20 +37,64 @@ public class LabManager : MonoBehaviour
         m_ReadyTools = new List<GameObject>();
         if (ApplicationManager.AM != null)
         {
-            GetTrays();
+            AssignTrays();
+            if (m_PrepareButton == null || m_BackButton == null)
+            {
+                Debug.Log("Assign UI buttons to LabManager");
+            }
         }
     }
 
-    private void GetTrays()
+    private void Update()
+    {
+        if (m_CurrentSelectedTool != null)
+        {
+            CheckMouseClick();
+        }
+    }
+
+    private void AssignTrays()
     {
         //Tested
         if (ApplicationManager.AM.m_CurrentScene != "")
         {
             switch (ApplicationManager.AM.m_CurrentScene)
             {
-                case "Carbohydrates": preToolTray = GameObject.Find("CarbPreTray"); readToolTray = GameObject.Find("CarbReadyTray"); break;
+                case "Detecting Sugar": preToolTray = GameObject.Find("CarbPreTray"); readyToolTray = GameObject.Find("CarbReadyTray"); break;
 
                 default: Debug.Log("NothingFound"); break;
+            }
+        }
+    }
+
+    private void ResetCurrentSelectedTool()
+    {
+        m_CurrentSelectedTool = null;
+        m_PrepareButton.SetActive(true);
+        m_BackButton.SetActive(false);
+        if (m_SelectedEffect != null)
+        {
+            m_SelectedEffect.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("No Selected Effect found");
+        }
+    }
+
+    private void CheckMouseClick()
+    {
+        //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.DrawRay(cameraRay.origin, cameraRay.direction * 10, Color.red);
+            if (EventSystem.current.currentSelectedGameObject == null)
+            {
+                if (Physics.Raycast(cameraRay, 10f) == false)
+                {
+                    ResetCurrentSelectedTool();
+                }
             }
         }
     }
@@ -46,11 +102,11 @@ public class LabManager : MonoBehaviour
     public bool fn_CheckReadyTools()
     {
         int successCounter = 0;
-        if (m_ReadyTools.Capacity == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools.Length)
+        if (m_ReadyTools.Count == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools.Length)
         {
-            for (int i = 0; i < m_ReadyTools.Capacity; i++)
+            for (int i = 0; i < m_ReadyTools.Count; i++)
             {
-                for (int j = 0; j < m_ReadyTools.Capacity; j++)
+                for (int j = 0; j < m_ReadyTools.Count; j++)
                 {
                     if (m_ReadyTools[i].GetComponent<Tool>().m_ToolType == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools[j])
                     {
@@ -60,7 +116,7 @@ public class LabManager : MonoBehaviour
                 }
             }
 
-            if (successCounter == m_ReadyTools.Capacity)
+            if (successCounter == m_ReadyTools.Count)
             {
                 return true;
             }
@@ -76,46 +132,33 @@ public class LabManager : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*public void fn_CheckMouseClick()
+    public GameObject fn_GetTray(bool isReady)
     {
-        //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (isReady == true)
         {
-            cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(cameraRay, out info))
-            {
-                if (info.collider.gameObject.tag == "Tool")
-                {
-                    m_CurrentSelectedObject = info.collider.gameObject;
-                }
-            }
+            return readyToolTray;
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        else
         {
-            m_CurrentSelectedObject = null;
+            return preToolTray;
         }
     }
 
-    private void CopyRequiredTools()
+    public void fn_SelectTool(GameObject tool)
     {
-        //This function reformate the requried tools for each lab and assign the correct requried tools from the local database in ApplicationManager.
-        m_RequiredTools = new string[ApplicationManager.AM.m_Labs[ApplicationManager.AM.m_CurrentLabIndex].m_RequiredTools.Length];
-        for (int i = 0; i < m_RequiredTools.Length; i++)
+        ResetCurrentSelectedTool();
+        m_CurrentSelectedTool = tool;
+        if (m_SelectedEffect != null)
         {
-            m_RequiredTools[i] = ApplicationManager.AM.m_Labs[ApplicationManager.AM.m_CurrentLabIndex].m_RequiredTools[i];
+            m_SelectedEffect.transform.parent = m_CurrentSelectedTool.transform;
+            m_SelectedEffect.transform.position = new Vector3(0, 0, 0);
+            m_SelectedEffect.SetActive(true);
         }
-    }*/
+        else
+        {
+            Debug.Log("Please Assign selected effect");
+        }
+    }
 }
+
+public enum LabState { UsingItem, EmptyingItem, UsingMicrosope, Idle};
