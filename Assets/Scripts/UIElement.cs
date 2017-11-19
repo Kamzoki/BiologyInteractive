@@ -162,7 +162,7 @@ public class UIElement : MonoBehaviour {
         {
             if (isUseItem == true)
             {
-                LabManager.LM.m_LabState = LabState.UsingItesm;
+                LabManager.LM.m_LabState = LabState.UsingItem;
             }
             else
             {

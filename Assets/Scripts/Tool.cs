@@ -44,7 +44,9 @@ public class Tool : MonoBehaviour {
                 Mission thisMission = ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].
                     m_Missions[ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex];
 
-                if (m_ToolType == thisMission.m_NextNeededTool && LabManager.LM.m_LabState == thisMission.m_ExpectedAction)
+                if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == thisMission.m_CurrentNeededTool
+                    && m_ToolType == thisMission.m_NextNeededTool 
+                    && LabManager.LM.m_LabState == thisMission.m_ExpectedAction)
                 {
                     switch (m_ToolType)
                     {

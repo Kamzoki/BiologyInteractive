@@ -161,4 +161,4 @@ public class LabManager : MonoBehaviour
     }
 }
 
-public enum LabState { UsingItesm, EmptyingItem, UsingMicrosope, Idle};
+public enum LabState { UsingItem, EmptyingItem, UsingMicrosope, Idle};

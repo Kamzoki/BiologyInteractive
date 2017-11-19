@@ -68,8 +68,10 @@ public struct Mission
 {
     //TODO populate missions of the two lab scenes needed as Nehal's note. Implement a global index to missions, with each click on a lab tool, check if the lab tool type matches the next lab tool accroding to the global index.
     public string m_MissionDescription;
+    public ToolType m_CurrentNeededTool;
     public ToolType m_NextNeededTool;
     public LabState m_ExpectedAction;
+    [HideInInspector]
     public bool isDone;
 
 }
