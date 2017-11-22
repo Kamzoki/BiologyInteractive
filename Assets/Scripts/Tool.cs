@@ -39,6 +39,7 @@ public class Tool : MonoBehaviour {
         {
             if (LabManager.LM.m_LabState == LabState.Idle)
             {
+                Debug.Log(m_ToolType);
                 LabManager.LM.fn_SelectTool(gameObject, isPrepared);
             }
             else
