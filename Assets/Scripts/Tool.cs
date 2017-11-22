@@ -39,8 +39,8 @@ public class Tool : MonoBehaviour {
         {
             if (LabManager.LM.m_LabState == LabState.Idle)
             {
-                Debug.Log(m_ToolType);
                 LabManager.LM.fn_SelectTool(gameObject, isPrepared);
+                Debug.Log(m_ToolType);
             }
             else
             {
@@ -51,6 +51,7 @@ public class Tool : MonoBehaviour {
                     && m_ToolType == thisMission.m_NextNeededTool 
                     && LabManager.LM.m_LabState == thisMission.m_ExpectedAction)
                 {
+                    Debug.Log("Applied Action");
                     switch (m_ToolType)
                     {
                         case ToolType.Beaker:

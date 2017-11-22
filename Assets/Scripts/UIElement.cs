@@ -112,6 +112,10 @@ public class UIElement : MonoBehaviour {
                 LabManager.LM.isBeganPractice = true;
                 Debug.Log("Let's Rock");
             }
+            else
+            {
+                Debug.Log("wrong prepration");
+            }
         }
     }
 
@@ -133,13 +137,20 @@ public class UIElement : MonoBehaviour {
     {
         if (LabManager.LM != null)
         {
-            if (isUseItem == true)
+            if (LabManager.LM.isBeganPractice == true)
             {
-                LabManager.LM.m_LabState = LabState.UsingItem;
+                if (isUseItem == true)
+                {
+                    LabManager.LM.m_LabState = LabState.UsingItem;
+                }
+                else
+                {
+                    LabManager.LM.m_LabState = LabState.EmptyingItem;
+                }
             }
             else
             {
-                LabManager.LM.m_LabState = LabState.EmptyingItem;
+                Debug.Log("Wrong preparing");
             }
         }
         else

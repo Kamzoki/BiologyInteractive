@@ -115,9 +115,11 @@ public class LabManager : MonoBehaviour
 
     public bool fn_CheckReadyTools()
     {
+
         int successCounter = 0;
         if (m_ReadyTools.Count == ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].m_RequiredTools.Length)
         {
+            Debug.Log("CheckTools working");
             for (int i = 0; i < m_ReadyTools.Count; i++)
             {
                 for (int j = 0; j < m_ReadyTools.Count; j++)
