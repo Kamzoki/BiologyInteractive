@@ -8,7 +8,8 @@ public class Tool : MonoBehaviour {
     Vector3 originalPosition;
     //public:
     public ToolType m_ToolType = ToolType.Beaker;
-
+    [HideInInspector]
+    public bool isPrepared = false;
 
     private void Start()
     {
@@ -22,13 +23,14 @@ public class Tool : MonoBehaviour {
         {
             gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, (gameObject.transform.position.z - LabManager.LM.fn_GetTray(!isReadyTool).transform.localScale.z) + (LabManager.LM.fn_GetTray(!isReadyTool).transform.position.z + 0.5f) );
             LabManager.LM.m_ReadyTools.Add(gameObject);
+            isPrepared = true;
         }
         else
         {
             gameObject.transform.position = originalPosition;
             LabManager.LM.m_ReadyTools.Remove(gameObject);
+            isPrepared = false;
         }
-        Debug.Log(LabManager.LM.m_ReadyTools.Count);
     }
 
     private void OnMouseUp()
@@ -37,7 +39,7 @@ public class Tool : MonoBehaviour {
         {
             if (LabManager.LM.m_LabState == LabState.Idle)
             {
-                LabManager.LM.fn_SelectTool(gameObject);
+                LabManager.LM.fn_SelectTool(gameObject, isPrepared);
             }
             else
             {

@@ -99,6 +99,20 @@ public class LabManager : MonoBehaviour
         }
     }
 
+    private void SetPrepareBtns(bool isPrepared)
+    {
+        if (isPrepared == true)
+        {
+            m_BackButton.SetActive(true);
+            m_PrepareButton.SetActive(false);
+        }
+        else
+        {
+            m_PrepareButton.SetActive(true);
+            m_BackButton.SetActive(false);
+        }
+    }
+
     public bool fn_CheckReadyTools()
     {
         int successCounter = 0;
@@ -144,10 +158,11 @@ public class LabManager : MonoBehaviour
         }
     }
 
-    public void fn_SelectTool(GameObject tool)
+    public void fn_SelectTool(GameObject tool, bool isPrepared)
     {
         ResetCurrentSelectedTool();
         m_CurrentSelectedTool = tool;
+        SetPrepareBtns(isPrepared);
         if (m_SelectedEffect != null)
         {
             m_SelectedEffect.transform.parent = m_CurrentSelectedTool.transform;
