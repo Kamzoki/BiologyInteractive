@@ -67,21 +67,6 @@ public class LabManager : MonoBehaviour
         }
     }
 
-    private void ResetCurrentSelectedTool()
-    {
-        m_CurrentSelectedTool = null;
-        m_PrepareButton.SetActive(true);
-        m_BackButton.SetActive(false);
-        if (m_SelectedEffect != null)
-        {
-            m_SelectedEffect.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("No Selected Effect found");
-        }
-    }
-
     private void CheckMouseClick()
     {
         //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
@@ -93,7 +78,7 @@ public class LabManager : MonoBehaviour
             {
                 if (Physics.Raycast(cameraRay, 10f) == false)
                 {
-                    ResetCurrentSelectedTool();
+                    fn_ResetCurrentSelectedTool();
                 }
             }
         }
@@ -110,6 +95,21 @@ public class LabManager : MonoBehaviour
         {
             m_PrepareButton.SetActive(true);
             m_BackButton.SetActive(false);
+        }
+    }
+
+    public void fn_ResetCurrentSelectedTool()
+    {
+        m_CurrentSelectedTool = null;
+        m_PrepareButton.SetActive(true);
+        m_BackButton.SetActive(false);
+        if (m_SelectedEffect != null)
+        {
+            m_SelectedEffect.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("No Selected Effect found");
         }
     }
 
@@ -162,7 +162,7 @@ public class LabManager : MonoBehaviour
 
     public void fn_SelectTool(GameObject tool, bool isPrepared)
     {
-        ResetCurrentSelectedTool();
+        fn_ResetCurrentSelectedTool();
         m_CurrentSelectedTool = tool;
         SetPrepareBtns(isPrepared);
         if (m_SelectedEffect != null)
