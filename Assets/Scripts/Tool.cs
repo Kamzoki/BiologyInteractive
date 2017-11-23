@@ -238,17 +238,10 @@ public class Tool : MonoBehaviour {
         {
             if (isFull == false)
             {
-                    if (m_Content != null)
-                    {
-                        Smash(m_Content.tag);
-                        isFull = true;
-                        LabManager.LM.m_LabState = LabState.Idle;
-                        LabManager.LM.fn_ResetCurrentSelectedTool();
-                    }
-                    else
-                    {
-                        Debug.Log("m_Content is null");
-                    }
+               Smash(m_Content.tag);
+               isFull = true;
+               LabManager.LM.m_LabState = LabState.Idle;
+               LabManager.LM.fn_ResetCurrentSelectedTool();
             }
             else
             {
