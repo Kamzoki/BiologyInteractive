@@ -11,7 +11,7 @@ public class LabManager : MonoBehaviour
     Ray cameraRay;
     private GameObject preToolTray;
     private GameObject readyToolTray;
-    
+    private GameObject infoPanel;
     //public:
     public static LabManager LM;
     public LabState m_LabState = LabState.Idle;
@@ -60,7 +60,18 @@ public class LabManager : MonoBehaviour
         {
             switch (ApplicationManager.AM.m_CurrentScene)
             {
-                case "Detecting Sugar": preToolTray = GameObject.Find("CarbPreTray"); readyToolTray = GameObject.Find("CarbReadyTray"); break;
+                case "Detecting Sugar":
+                    preToolTray = GameObject.Find("CarbPreTray");
+                    readyToolTray = GameObject.Find("CarbReadyTray");
+                    infoPanel = GameObject.Find("Sugar Panel"); infoPanel.SetActive(true);
+                    break;
+                case "Detecting Starch":
+                    preToolTray = GameObject.Find("CarbPreTray");
+                    readyToolTray = GameObject.Find("CarbReadyTray");
+                    infoPanel = GameObject.Find("Starch Panel"); infoPanel.SetActive(true);
+                    break;
+
+                    break;
 
                 default: Debug.Log("NothingFound"); break;
             }
