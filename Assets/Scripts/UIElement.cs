@@ -142,6 +142,14 @@ public class UIElement : MonoBehaviour {
                 if (isUseItem == true)
                 {
                     LabManager.LM.m_LabState = LabState.UsingItem;
+                    if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Mortar_Pestle)
+                    {
+                        LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Mortar_Pestle(LabManager.LM.m_LabState, null);
+                    }
+                    else if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Bunsen_Burner)
+                    {
+                        LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Bunsen_Burner(LabManager.LM.m_LabState);
+                    }
                 }
                 else
                 {
