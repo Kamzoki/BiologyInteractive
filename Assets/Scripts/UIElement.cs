@@ -166,4 +166,9 @@ public class UIElement : MonoBehaviour {
             Debug.Log("LabManager is null");
         }
     }
+
+    public void fn_ExitApplication()
+    {
+        Application.Quit();
+    }
 }
