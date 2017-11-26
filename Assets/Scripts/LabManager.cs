@@ -70,9 +70,6 @@ public class LabManager : MonoBehaviour
                     readyToolTray = GameObject.Find("CarbReadyTray");
                     infoPanel = GameObject.Find("Starch Panel"); infoPanel.SetActive(true);
                     break;
-
-                    break;
-
                 default: Debug.Log("NothingFound"); break;
             }
         }
