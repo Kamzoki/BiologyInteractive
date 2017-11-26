@@ -20,6 +20,7 @@ public class LabManager : MonoBehaviour
     public GameObject m_SelectedEffect;
 
     //Lab UI Dynamic Elements.
+    public Animator m_MainCameraAnimator;
     public GameObject m_PrepareButton;
     public GameObject m_BackButton;
     public GameObject m_UseButton;
@@ -145,6 +146,7 @@ public class LabManager : MonoBehaviour
 
             if (successCounter == m_ReadyTools.Count)
             {
+                m_MainCameraAnimator.SetBool(0, true);
                 return true;
             }
             else

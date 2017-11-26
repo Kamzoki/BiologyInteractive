@@ -147,7 +147,7 @@ public class UIElement : MonoBehaviour {
             if (LabManager.LM.fn_CheckReadyTools() == true)
             {
                 LabManager.LM.isBeganPractice = true;
-                Debug.Log("Let's Rock");
+                LabManager.LM.m_ToolText.text = "ﺔﺑﺮﺠﺘﻟﺍ ﻲﻓ ﺀﺪﺒﻟﺍ ﻚﻨﻜﻤﻳ ﻥﻷﺍ !ﺖﻨﺴﺣﺃ";
             }
             else
             {
@@ -160,12 +160,19 @@ public class UIElement : MonoBehaviour {
     {
         if (LabManager.LM != null)
         {
-            if (LabManager.LM.m_CurrentSelectedTool != null)
+            if (LabManager.LM.m_CurrentSelectedTool != null && LabManager.LM.isBeganPractice == false)
             {
                 
                 LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_SwitchToolParent(isReadyTool);
                 m_ActivationObjects[0].SetActive(true);
                 gameObject.SetActive(false);
+            }
+
+            else
+            {
+                Color newAlpha = new Color(255, 255, 255, 100);
+                gameObject.GetComponent<Image>().color = newAlpha;
+                gameObject.GetComponent<Button>().enabled = false;
             }
         }
     }
