@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIElement : MonoBehaviour {
     //This class is attached to any button or interactable UI element that does something. This class provides all UI functionalities and properties.
@@ -16,10 +17,21 @@ public class UIElement : MonoBehaviour {
     public string m_AnotherAnimation;
     public bool playMultiAnimations;
     public bool resetAnimations = false;
+    
+    public enum Functions { fn_LoadLabScene, fn_LoadObject, fn_StartAnimation, fn_CheckTools, fn_SwitchToolParent, fn_UseItem_EmptyItem, fn_ExitApplication, ResetScrollRect, CallOutterUIFunction};
+    [System.Serializable]
+    public struct FunctionsEntity
+    {
+        public bool boolParameter;
+        public string stringParameter;
+        public GameObject gameObjectParameter;
+        public Functions outterFunctionName;
+        public Functions functionName;
+    }
 
+    public FunctionsEntity[] FunctionsToCall;
     //private:
     private bool isPressedBefore = false;
-
 
     private void OnEnable()
     {
@@ -28,6 +40,28 @@ public class UIElement : MonoBehaviour {
             m_AnimationComponent.Play("Carbs module Reseting animation");
            /* m_AnimationComponent[""].enabled = false;
             m_AnimationComponent[""].enabled = false;*/
+        }
+    }
+
+    private void ResetScrollRect(GameObject ScrollRect)
+    {
+        ScrollRect.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+    }
+
+    private void CallOutterUIFunction (Functions function, GameObject outerObject, bool boolParameter, string stringParameter)
+    {
+        switch (function)
+        {
+            case Functions.fn_LoadLabScene: outerObject.GetComponent<UIElement>().fn_LoadLabScene(boolParameter);
+                break;
+            case Functions.fn_LoadObject:
+                outerObject.GetComponent<UIElement>().fn_LoadObject(boolParameter);
+                break;
+            case Functions.fn_StartAnimation:
+                outerObject.GetComponent<UIElement>().fn_StartAnimation(stringParameter);
+                break;
+            default: Debug.Log("No function Specified");
+                break;
         }
     }
     public void fn_LoadLabScene(bool isRestarting)
@@ -171,4 +205,40 @@ public class UIElement : MonoBehaviour {
     {
         Application.Quit();
     }
+
+    public void fn_CallMultipleFuncitons()
+    {
+        if (FunctionsToCall != null)
+        {
+            for (int i = 0; i < FunctionsToCall.Length; i++)
+            {
+                switch (FunctionsToCall[i].functionName)
+                {
+                    case Functions.fn_LoadLabScene: fn_LoadLabScene(FunctionsToCall[i].boolParameter);
+                        break;
+                    case Functions.fn_LoadObject: fn_LoadObject(FunctionsToCall[i].boolParameter);
+                        break;
+                    case Functions.fn_StartAnimation: fn_StartAnimation(FunctionsToCall[i].stringParameter);
+                        break;
+                    case Functions.fn_CheckTools: fn_CheckTools();
+                        break;
+                    case Functions.fn_SwitchToolParent: fn_SwitchToolParent(FunctionsToCall[i].boolParameter);
+                        break;
+                    case Functions.fn_UseItem_EmptyItem: fn_UseItem_EmptyItem(FunctionsToCall[i].boolParameter);
+                        break;
+                    case Functions.fn_ExitApplication:fn_ExitApplication();
+                        break;
+                    case Functions.ResetScrollRect: ResetScrollRect(FunctionsToCall[i].gameObjectParameter);
+                        break;
+                    case Functions.CallOutterUIFunction: CallOutterUIFunction(FunctionsToCall[i].outterFunctionName, FunctionsToCall[i].gameObjectParameter, FunctionsToCall[i].boolParameter, FunctionsToCall[i].stringParameter);
+                        break;
+                    default: Debug.Log("No function with this name");
+                        break;
+                }
+            }
+        }
+    }
+
+
+
 }
