@@ -9,6 +9,7 @@ public class Tool : MonoBehaviour {
     bool isFull = false;
 
     //public:
+    public string m_ToolName;
     public ToolType m_ToolType = ToolType.Beaker;
 
     public GameObject m_Content;
@@ -34,7 +35,6 @@ public class Tool : MonoBehaviour {
             if (LabManager.LM.m_LabState == LabState.Idle)
             {
                 LabManager.LM.fn_SelectTool(gameObject, isPrepared);
-                Debug.Log(m_ToolType);
             }
             else
             {

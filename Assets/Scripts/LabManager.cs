@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LabManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class LabManager : MonoBehaviour
     public GameObject m_BackButton;
     public GameObject m_UseButton;
     public GameObject m_EmptyButton;
+    public Text m_ToolText;
 
     [HideInInspector]
     public bool isBeganPractice = false;
@@ -109,6 +111,7 @@ public class LabManager : MonoBehaviour
     public void fn_ResetCurrentSelectedTool()
     {
         m_CurrentSelectedTool = null;
+        m_ToolText.text = "";
         m_PrepareButton.SetActive(true);
         m_BackButton.SetActive(false);
         if (m_SelectedEffect != null)
@@ -172,6 +175,7 @@ public class LabManager : MonoBehaviour
     {
         fn_ResetCurrentSelectedTool();
         m_CurrentSelectedTool = tool;
+        m_ToolText.text = m_CurrentSelectedTool.GetComponent<Tool>().m_ToolName;
         SetPrepareBtns(isPrepared);
         if (m_SelectedEffect != null)
         {

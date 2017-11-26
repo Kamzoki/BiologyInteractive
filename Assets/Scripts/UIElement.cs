@@ -64,6 +64,7 @@ public class UIElement : MonoBehaviour {
                 break;
         }
     }
+
     public void fn_LoadLabScene(bool isRestarting)
     {
         //tested
@@ -89,6 +90,7 @@ public class UIElement : MonoBehaviour {
                 m_ActivationObjects[0].SetActive(true);
             }
     }
+
     public void fn_LoadObject(bool disableObject)
     {
             if (m_ActivationObjects != null)
@@ -116,6 +118,7 @@ public class UIElement : MonoBehaviour {
         {
             if (m_AnimationComponent != null)
             {
+                Debug.Log("here" + isPressedBefore);
                 m_AnimationComponent.enabled = true;
                 if (playMultiAnimations == true)
                 {
@@ -173,21 +176,24 @@ public class UIElement : MonoBehaviour {
         {
             if (LabManager.LM.isBeganPractice == true)
             {
-                if (isUseItem == true)
+                if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType != ToolType.Beaker)
                 {
-                    LabManager.LM.m_LabState = LabState.UsingItem;
-                    if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Mortar_Pestle)
+                    if (isUseItem == true)
                     {
-                        LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Mortar_Pestle(LabManager.LM.m_LabState, null);
+                        LabManager.LM.m_LabState = LabState.UsingItem;
+                        if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Mortar_Pestle)
+                        {
+                            LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Mortar_Pestle(LabManager.LM.m_LabState, null);
+                        }
+                        else if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Bunsen_Burner)
+                        {
+                            LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Bunsen_Burner(LabManager.LM.m_LabState);
+                        }
                     }
-                    else if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Bunsen_Burner)
+                    else
                     {
-                        LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Bunsen_Burner(LabManager.LM.m_LabState);
+                        LabManager.LM.m_LabState = LabState.EmptyingItem;
                     }
-                }
-                else
-                {
-                    LabManager.LM.m_LabState = LabState.EmptyingItem;
                 }
             }
             else
