@@ -45,7 +45,9 @@ public class Tool : MonoBehaviour {
                     && m_ToolType == thisMission.m_NextNeededTool 
                     && LabManager.LM.m_LabState == thisMission.m_ExpectedAction)
                 {
-                    Debug.Log("Applied Action");
+                    thisMission.isDone = true;
+                    LabManager.LM.fn_UpdateMissionText(ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex + 1);
+                    ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex++;
                     switch (currentSelectedTool.m_ToolType)
                     {
                         case ToolType.Dropper: currentSelectedTool.fn_Dropper(LabManager.LM.m_LabState, this);
@@ -86,7 +88,7 @@ public class Tool : MonoBehaviour {
 
     private void Smash(string SmashableObjectTag)
     {
-        for (int i = 0; i < m_ChildTools.Length; i++)
+        /*for (int i = 0; i < m_ChildTools.Length; i++)
         {
             if (SmashableObjectTag == m_ChildTools[i].tag)
             {
@@ -95,7 +97,7 @@ public class Tool : MonoBehaviour {
                 m_Content = m_ChildTools[i];
                 return;
             }
-        }
+        }*/
     }
 
     public void fn_SwitchToolParent(bool isReadyTool)
@@ -117,7 +119,7 @@ public class Tool : MonoBehaviour {
 
     public void fn_ClearContent()
     {
-        GameObject.Destroy(m_Content.gameObject);
+        //GameObject.Destroy(m_Content.gameObject);
         m_Content = null;
         isFull = false;
     }
@@ -155,8 +157,8 @@ public class Tool : MonoBehaviour {
                 if (OtherTool.m_ToolType == ToolType.Distilled_Water || OtherTool.m_ToolType == ToolType.Egg_Yolk || OtherTool.m_ToolType == ToolType.Glucose_Solution ||
                 OtherTool.m_ToolType == ToolType.Iodine_Solution || OtherTool.m_ToolType == ToolType.Starch_Solution || OtherTool.m_ToolType == ToolType.Benedict_Reagent)
                 {
-                    GameObject newContent = Instantiate(OtherTool.m_Content, m_ContentPosition.position, transform.rotation, transform);
-                    m_Content = newContent;
+                    //GameObject newContent = Instantiate(OtherTool.m_Content, m_ContentPosition.position, transform.rotation, transform);
+                    //m_Content = newContent;
                     isFull = true;
                     LabManager.LM.m_LabState = LabState.Idle;
                     LabManager.LM.fn_ResetCurrentSelectedTool();
@@ -179,10 +181,10 @@ public class Tool : MonoBehaviour {
                 if (OtherTool.m_ToolType == ToolType.Container_Sample || OtherTool.m_ToolType == ToolType.MircoScope_GlassSection || OtherTool.m_ToolType == ToolType.Mortar_Pestle
                     || OtherTool.m_ToolType == ToolType.TestingTube)
                 {
-                    GameObject DropedContent = Instantiate(m_Content, OtherTool.m_ContentPosition.position, OtherTool.gameObject.transform.rotation, OtherTool.gameObject.transform);
-                    OtherTool.m_Content = DropedContent;
+                   // GameObject DropedContent = Instantiate(m_Content, OtherTool.m_ContentPosition.position, OtherTool.gameObject.transform.rotation, OtherTool.gameObject.transform);
+                   // OtherTool.m_Content = DropedContent;
 
-                    switch (OtherTool.m_Content.tag)
+                   /* switch (OtherTool.m_Content.tag)
                     {
                         case "Glucose Solution":
                             if (m_Content.tag == "Bendict Reagent")
@@ -214,7 +216,7 @@ public class Tool : MonoBehaviour {
 
                         default: Debug.Log("No specified behavior");
                             break;
-                    }
+                    }*/
 
                     fn_ClearContent();
                     LabManager.LM.m_LabState = LabState.Idle;
@@ -255,9 +257,9 @@ public class Tool : MonoBehaviour {
             {
                 if (OtherTool.m_ToolType == ToolType.Container_Sample)
                 {
-                    GameObject DropedContent = Instantiate(m_Content, OtherTool.m_ContentPosition.position, OtherTool.gameObject.transform.rotation, OtherTool.gameObject.transform);
-                    OtherTool.m_Content = DropedContent;
-                    GameObject.Destroy(m_Content.gameObject);
+                    //GameObject DropedContent = Instantiate(m_Content, OtherTool.m_ContentPosition.position, OtherTool.gameObject.transform.rotation, OtherTool.gameObject.transform);
+                    //OtherTool.m_Content = DropedContent;
+                    //GameObject.Destroy(m_Content.gameObject);
                     isFull = false;
                     LabManager.LM.m_LabState = LabState.Idle;
                     LabManager.LM.fn_ResetCurrentSelectedTool();
@@ -290,8 +292,8 @@ public class Tool : MonoBehaviour {
         {
             if (OtherTool.m_ToolType == ToolType.Container_Sample || OtherTool.m_ToolType == ToolType.Mortar_Pestle)
             {
-                GameObject DropedContent = Instantiate(m_Content, OtherTool.m_ContentPosition.position, OtherTool.gameObject.transform.rotation, OtherTool.gameObject.transform);
-                OtherTool.m_Content = DropedContent;
+               // GameObject DropedContent = Instantiate(m_Content, OtherTool.m_ContentPosition.position, OtherTool.gameObject.transform.rotation, OtherTool.gameObject.transform);
+                //OtherTool.m_Content = DropedContent;
                 LabManager.LM.m_LabState = LabState.Idle;
                 LabManager.LM.fn_ResetCurrentSelectedTool();
             }

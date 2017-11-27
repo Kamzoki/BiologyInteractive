@@ -18,7 +18,7 @@ public class UIElement : MonoBehaviour {
     public bool playMultiAnimations;
     public bool resetAnimations = false;
     
-    public enum Functions { fn_LoadLabScene, fn_LoadObject, fn_StartAnimation, fn_CheckTools, fn_SwitchToolParent, fn_UseItem_EmptyItem, fn_ExitApplication, ResetScrollRect, CallOutterUIFunction};
+    public enum Functions { fn_LoadLabScene, fn_LoadObject, fn_StartAnimation, fn_CheckTools, fn_SwitchToolParent, fn_UseItem_EmptyItem, fn_ExitApplication, fn_ToggelActivationObject, ResetScrollRect, CallOutterUIFunction};
     [System.Serializable]
     public struct FunctionsEntity
     {
@@ -113,12 +113,35 @@ public class UIElement : MonoBehaviour {
             }
     }
 
+    public void fn_ToggelActivationObject(bool toggelisPressedBefore)
+    {
+        if (toggelisPressedBefore == true)
+        {
+            isPressedBefore = !isPressedBefore;
+        }
+
+        if (isPressedBefore == true)
+        {
+            for (int i = 0; i < m_ActivationObjects.Length; i++)
+            {
+                m_ActivationObjects[i].SetActive(true);
+            }
+        }
+
+        else
+        {
+            for (int i = 0; i < m_ActivationObjects.Length; i++)
+            {
+                m_ActivationObjects[i].SetActive(false);
+            }
+        }
+    }
+
     public void fn_StartAnimation(string AnimationName)
     {
         {
             if (m_AnimationComponent != null)
             {
-                Debug.Log("here" + isPressedBefore);
                 m_AnimationComponent.enabled = true;
                 if (playMultiAnimations == true)
                 {
@@ -240,6 +263,8 @@ public class UIElement : MonoBehaviour {
                     case Functions.fn_UseItem_EmptyItem: fn_UseItem_EmptyItem(FunctionsToCall[i].boolParameter);
                         break;
                     case Functions.fn_ExitApplication:fn_ExitApplication();
+                        break;
+                    case Functions.fn_ToggelActivationObject: fn_ToggelActivationObject(FunctionsToCall[i].boolParameter);
                         break;
                     case Functions.ResetScrollRect: ResetScrollRect(FunctionsToCall[i].gameObjectParameter);
                         break;
