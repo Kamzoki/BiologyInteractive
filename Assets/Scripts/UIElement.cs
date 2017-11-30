@@ -185,17 +185,12 @@ public class UIElement : MonoBehaviour {
         {
             if (LabManager.LM.m_CurrentSelectedTool != null && LabManager.LM.isBeganPractice == false)
             {
-                
-                LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_SwitchToolParent(isReadyTool);
-                m_ActivationObjects[0].SetActive(true);
-                gameObject.SetActive(false);
-            }
-
-            else
-            {
-                Color newAlpha = new Color(255, 255, 255, 100);
-                gameObject.GetComponent<Image>().color = newAlpha;
-                gameObject.GetComponent<Button>().enabled = false;
+                if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType != ToolType.Beaker)
+                {
+                    LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_SwitchToolParent(isReadyTool);
+                    m_ActivationObjects[0].SetActive(true);
+                    gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -204,27 +199,43 @@ public class UIElement : MonoBehaviour {
     {
         if (LabManager.LM != null)
         {
+            
             if (LabManager.LM.isBeganPractice == true)
             {
-                if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType != ToolType.Beaker)
-                {
                     if (isUseItem == true)
                     {
-                        LabManager.LM.m_LabState = LabState.UsingItem;
-                        if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Mortar_Pestle)
+                    LabManager.LM.m_LabState = LabState.UsingItem;
+
+                    if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Mortar_Pestle)
                         {
+                            if (ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].
+                                m_Missions[ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex].m_CurrentNeededTool == ToolType.Mortar_Pestle)
+                            {
                             LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Mortar_Pestle(LabManager.LM.m_LabState, null);
+                            }
+                        else
+                        {
+                            LabManager.LM.m_ToolText.text = "ﺔﺌﻃﺎﺧ ﺓﻮﻄﺧ";
+                        }
                         }
                         else if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType == ToolType.Bunsen_Burner)
                         {
-                            LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Bunsen_Burner(LabManager.LM.m_LabState);
+                            if (ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].
+                                m_Missions[ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex].m_CurrentNeededTool == ToolType.Bunsen_Burner)
+                        {
+                            StartCoroutine(LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_Bunsen_Burner(LabManager.LM.m_LabState));
+                        }
+                        else
+                        {
+                            LabManager.LM.m_ToolText.text = "ﺔﺌﻃﺎﺧ ﺓﻮﻄﺧ";
+                        }
+                            
                         }
                     }
                     else
                     {
                         LabManager.LM.m_LabState = LabState.EmptyingItem;
                     }
-                }
             }
             else
             {
