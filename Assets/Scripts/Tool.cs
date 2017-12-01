@@ -48,6 +48,7 @@ public class Tool : MonoBehaviour {
                     thisMission.isDone = true;
                     LabManager.LM.fn_UpdateMissionText(ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex + 1);
                     ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex++;
+                    LabManager.LM.m_ToolText.text = "ﺔﺤﻴﺤﺻ ﺓﻮﻄﺧ";
                     switch (currentSelectedTool.m_ToolType)
                     {
                         case ToolType.Dropper: currentSelectedTool.fn_Dropper(LabManager.LM.m_LabState, this);
@@ -80,7 +81,7 @@ public class Tool : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("Wrong step");
+                    LabManager.LM.m_ToolText.text = "ﺔﺌﻃﺎﺧ ﺓﻮﻄﺧ";
                 }
             }
         }
@@ -126,8 +127,9 @@ public class Tool : MonoBehaviour {
 
     public IEnumerator fn_Bunsen_Burner(LabState LS)
     {
-        if (LS == LabState.UsingItem)
-        {
+        // if (LS == LabState.UsingItem)
+        //{
+        Debug.Log("FUCKING HERE!");
             m_Content.SetActive(true);
             LabManager.LM.m_LabState = LabState.Idle;
             LabManager.LM.fn_ResetCurrentSelectedTool();
@@ -141,11 +143,11 @@ public class Tool : MonoBehaviour {
             {
                 Debug.Log("Beaker not a child to bunsen burner"); 
             }
-        }
-        else
-        {
-            Debug.Log("Action Can't be applied to this tool"); // TODO Change to dynamic on screen arabic text
-        }
+        //}
+       // else
+        //{
+          //  Debug.Log("Action Can't be applied to this tool"); // TODO Change to dynamic on screen arabic text
+       // }
     }
 
     public void fn_Dropper(LabState LS, Tool OtherTool)
