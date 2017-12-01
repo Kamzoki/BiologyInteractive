@@ -174,7 +174,7 @@ public class UIElement : MonoBehaviour {
             }
             else
             {
-                Debug.Log("wrong prepration");
+                LabManager.LM.m_ToolText.text = "ﺊﻃﺎﺧ ﺮﻴﻀﺤﺗ";
             }
         }
     }
@@ -187,6 +187,7 @@ public class UIElement : MonoBehaviour {
             {
                 if (LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().m_ToolType != ToolType.Beaker)
                 {
+                    LabManager.LM.m_ToolText.text = "";
                     LabManager.LM.m_CurrentSelectedTool.GetComponent<Tool>().fn_SwitchToolParent(isReadyTool);
                     m_ActivationObjects[0].SetActive(true);
                     gameObject.SetActive(false);
@@ -239,7 +240,7 @@ public class UIElement : MonoBehaviour {
             }
             else
             {
-                Debug.Log("Wrong preparing");
+                LabManager.LM.m_ToolText.text = "ﻻﻭﺃ ﺮﻴﻀﺤﺘﻟﺍ ﺔﻠﺣﺮﻣ ﻦﻣ ﺀﺎﻬﺘﻧﻻﺍ ﻚﻴﻠﻋ";
             }
         }
         else
