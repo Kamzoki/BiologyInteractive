@@ -159,7 +159,6 @@ public class LabManager : MonoBehaviour
                 case "Detecting Sugar": 
                     preToolTray = GameObject.Find("CarbPreTray");
                     readyToolTray = GameObject.Find("CarbReadyTray");
-                    Debug.Log(preToolTray.name + readyToolTray.name);
                     infoPanel = GameObject.FindWithTag("Sugar Panel"); infoPanel.SetActive(true);
                     break;
                 case "Detecting Starch":

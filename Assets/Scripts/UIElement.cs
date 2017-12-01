@@ -85,7 +85,7 @@ public class UIElement : MonoBehaviour {
                 SceneManager.LoadSceneAsync(ApplicationManager.AM.m_SceneToLoadIndex);
             }
 
-            if (m_ActivationObjects != null)
+            if (m_ActivationObjects.Length > 0)
             {
                 m_ActivationObjects[0].SetActive(true);
             }
