@@ -37,7 +37,7 @@ public class LabManager : MonoBehaviour
     public GameObject m_CurrentSelectedTool;
 
     private void Awake()
-    {
+    { 
         LM = this;
         m_ReadyTools = new List<GameObject>();
         infoPanel = new GameObject();

@@ -47,6 +47,7 @@ public class ApplicationManager : MonoBehaviour {
                 m_CurrentScene = newScene;
                 m_CurrentScenesIndex = i;
                 m_SceneToLoadIndex =  m_Scenes[i].m_SceneIndex;
+                return;
             }
         }
     }
