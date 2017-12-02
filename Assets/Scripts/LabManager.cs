@@ -174,7 +174,7 @@ public class LabManager : MonoBehaviour
     private void CheckMouseClick()
     {
         //This function checks if the raycast fired from the mouse hit an object tagged tool or not.
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && m_LabState == LabState.Idle)
         {
             cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(cameraRay.origin, cameraRay.direction * 10, Color.red);
@@ -240,6 +240,10 @@ public class LabManager : MonoBehaviour
             if (successCounter == m_ReadyTools.Count)
             {
                 m_MainCameraAnimator.SetBool("isLabReady", true);
+                m_PrepareButton.GetComponent<Button>().enabled = false;
+                m_PrepareButton.GetComponent<Image>().color = new Color(m_PrepareButton.GetComponent<Image>().color.r, m_PrepareButton.GetComponent<Image>().color.g, m_PrepareButton.GetComponent<Image>().color.b, m_PrepareButton.GetComponent<Image>().color.a - 0.5f);
+                m_BackButton.GetComponent<Button>().enabled = false;
+                m_BackButton.GetComponent<Image>().color = new Color(m_BackButton.GetComponent<Image>().color.r, m_BackButton.GetComponent<Image>().color.g, m_BackButton.GetComponent<Image>().color.b, m_BackButton.GetComponent<Image>().color.a - 0.5f);
                 return true;
             }
             else

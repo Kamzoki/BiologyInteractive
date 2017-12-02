@@ -5,8 +5,9 @@ using UnityEngine;
 public class Tool : MonoBehaviour {
 
     //private:
-    Vector3 originalPosition;
-    bool isFull = false;
+    private Vector3 originalPosition;
+    private Vector3 originalTestingTubePosition;
+    public bool isFull = false;
 
     //public:
     public string m_ToolName;
@@ -14,6 +15,7 @@ public class Tool : MonoBehaviour {
 
     public GameObject m_Content;
     public Transform m_ContentPosition;
+    public Transform m_InteractEntryPoint;
 
     public GameObject[] m_ChildTools;
     public float m_BunsenBurner_Timer = 10;
@@ -82,6 +84,8 @@ public class Tool : MonoBehaviour {
                 else
                 {
                     LabManager.LM.m_ToolText.text = "ﺔﺌﻃﺎﺧ ﺓﻮﻄﺧ";
+                    LabManager.LM.m_CurrentSelectedTool = null;
+                    LabManager.LM.m_LabState = LabState.Idle;
                 }
             }
         }
@@ -129,12 +133,18 @@ public class Tool : MonoBehaviour {
     {
         // if (LS == LabState.UsingItem)
         //{
-        Debug.Log("FUCKING HERE!");
             m_Content.SetActive(true);
             LabManager.LM.m_LabState = LabState.Idle;
             LabManager.LM.fn_ResetCurrentSelectedTool();
 
+            ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].
+            m_Missions[ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex].isDone = true;
+            LabManager.LM.fn_UpdateMissionText(ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex + 1);
+            ApplicationManager.AM.m_Scenes[ApplicationManager.AM.m_CurrentScenesIndex].LastMissionIndex++;
+            LabManager.LM.m_ToolText.text = "ﺔﺤﻴﺤﺻ ﺓﻮﻄﺧ";
+
             yield  return new WaitForSeconds (m_BunsenBurner_Timer);
+
             if (m_ChildTools != null)
             {
                 m_ChildTools[0].GetComponent<Tool>().m_ToolTempreture = 10;
@@ -143,11 +153,12 @@ public class Tool : MonoBehaviour {
             {
                 Debug.Log("Beaker not a child to bunsen burner"); 
             }
+
         //}
-       // else
+        // else
         //{
-          //  Debug.Log("Action Can't be applied to this tool"); // TODO Change to dynamic on screen arabic text
-       // }
+        //  Debug.Log("Action Can't be applied to this tool"); // TODO Change to dynamic on screen arabic text
+        // }
     }
 
     public void fn_Dropper(LabState LS, Tool OtherTool)
@@ -234,6 +245,8 @@ public class Tool : MonoBehaviour {
                 Debug.Log("Dropper has no content"); // TODO Change to dynamic on screen arabic text
             }
         }
+
+        fn_Interact(OtherTool, 90f, 0, 0);
     }
 
     public void fn_Mortar_Pestle(LabState LS, Tool OtherTool)
@@ -282,6 +295,15 @@ public class Tool : MonoBehaviour {
     {
         if (Beaker.m_ToolType == ToolType.Beaker)
         {
+            if (Beaker.isFull == true && Beaker.fn_GetBeakerContentPrePosition() != new Vector3 (0,0,0) )
+            {
+                gameObject.transform.position = Beaker.fn_GetBeakerContentPrePosition();
+            }
+            else
+            {
+                Debug.Log("Something went wrong!");
+            }
+            Beaker.originalTestingTubePosition = transform.position;
             gameObject.transform.position = Beaker.m_ContentPosition.position;
             Beaker.m_Content = gameObject;
             Beaker.isFull = true;
@@ -300,5 +322,30 @@ public class Tool : MonoBehaviour {
                 LabManager.LM.fn_ResetCurrentSelectedTool();
             }
         }
+    }
+
+    public void fn_Interact (Tool OtherTool)
+    {
+        gameObject.transform.position = OtherTool.m_InteractEntryPoint.position;
+    }
+
+    public void fn_Interact (Tool OtherTool, float XRotation, float YRotation, float ZRotation)
+    {
+        gameObject.transform.position = OtherTool.m_InteractEntryPoint.position;
+        gameObject.transform.eulerAngles = new Vector3 (XRotation, YRotation, ZRotation);
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public Vector3 fn_GetBeakerContentPrePosition()
+    {
+        if (originalTestingTubePosition != null)
+        {
+            return originalTestingTubePosition;
+        }
+        else
+        {
+            return new Vector3(0, 0, 0);
+        }
+        
     }
 }
