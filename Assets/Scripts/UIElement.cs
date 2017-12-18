@@ -35,6 +35,10 @@ public class UIElement : MonoBehaviour {
     //private:
     private bool isPressedBefore = false;
 
+    private bool startSkipping = false;
+    private bool isFastForward = false;
+    private long framesToSkip = 0;
+
     private void OnEnable()
     {
         if (resetAnimations == true)
@@ -311,6 +315,7 @@ public class UIElement : MonoBehaviour {
             Camera.main.GetComponent<VideoPlayer>().SetTargetAudioSource(0, Camera.main.GetComponent<AudioSource>());
             Camera.main.GetComponent<VideoPlayer>().Play();
     }
+
     public void fn_StopVideo()
     {
         if (m_ActivationObjects != null)
@@ -347,4 +352,40 @@ public class UIElement : MonoBehaviour {
         }
     }
 
+    public void fn_StartVideoSkip(bool isFastForward)
+    {
+        Camera.main.GetComponent<VideoPlayer>().Pause();
+        framesToSkip = Camera.main.GetComponent<VideoPlayer>().frame;
+
+        this.isFastForward = isFastForward;
+        startSkipping = true;
+    }
+
+    public void fn_StopVideoSkip()
+    {
+        startSkipping = false;
+        Camera.main.GetComponent<VideoPlayer>().frame = framesToSkip;
+        Camera.main.GetComponent<VideoPlayer>().Play();
+    }
+
+    private void Update()
+    {
+        if (startSkipping == true)
+        {
+            if (isFastForward == true)
+            {
+                if ((ulong)framesToSkip < Camera.main.GetComponent<VideoPlayer>().frameCount)
+                {
+                    framesToSkip += 1;
+                }
+            }
+            else
+            {
+                if ((ulong)framesToSkip > Camera.main.GetComponent<VideoPlayer>().frameCount)
+                {
+                    framesToSkip -= 1;
+                }
+            }
+        }
+    }
 }
