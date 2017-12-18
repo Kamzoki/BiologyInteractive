@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class UIElement : MonoBehaviour {
     //This class is attached to any button or interactable UI element that does something. This class provides all UI functionalities and properties.
@@ -17,7 +18,8 @@ public class UIElement : MonoBehaviour {
     public string m_AnotherAnimation;
     public bool playMultiAnimations;
     public bool resetAnimations = false;
-    
+
+    public VideoClip m_VideoClip;
     public enum Functions { fn_LoadLabScene, fn_LoadObject, fn_StartAnimation, fn_CheckTools, fn_SwitchToolParent, fn_UseItem_EmptyItem, fn_ExitApplication, fn_ToggelActivationObject, ResetScrollRect, CallOutterUIFunction};
     [System.Serializable]
     public struct FunctionsEntity
@@ -289,6 +291,60 @@ public class UIElement : MonoBehaviour {
         }
     }
 
+    public void fn_PlayVideo()
+    {
+        if (m_DisableObjects != null)
+        {
+            for (int i = 0; i < m_DisableObjects.Length; i++)
+            {
+                m_DisableObjects[i].SetActive(false);
+            }
+        }
+        if (m_ActivationObjects != null)
+        {
+            for (int i = 0; i < m_ActivationObjects.Length; i++)
+            {
+                m_ActivationObjects[i].SetActive(true);
+            }
+        }
+            Camera.main.GetComponent<VideoPlayer>().clip = m_VideoClip;
+            Camera.main.GetComponent<VideoPlayer>().SetTargetAudioSource(0, Camera.main.GetComponent<AudioSource>());
+            Camera.main.GetComponent<VideoPlayer>().Play();
+    }
+    public void fn_StopVideo()
+    {
+        if (m_ActivationObjects != null)
+        {
+            for (int i = 0; i < m_ActivationObjects.Length; i++)
+            {
+                m_ActivationObjects[i].SetActive(true);
+            }
+        }
 
+        if (m_DisableObjects != null)
+        {
+            for (int i = 0; i < m_DisableObjects.Length; i++)
+            {
+                m_DisableObjects[i].SetActive(false);
+            }
+        }
+        Camera.main.GetComponent<VideoPlayer>().Stop();
+        Camera.main.GetComponent<VideoPlayer>().clip = null;
+
+    }
+
+    public void fn_PauseVideo()
+    {
+        isPressedBefore = !isPressedBefore;
+
+        if (isPressedBefore == true)
+        {
+            Camera.main.GetComponent<VideoPlayer>().Pause();
+        }
+        else
+        {
+            Camera.main.GetComponent<VideoPlayer>().Play();
+        }
+    }
 
 }
