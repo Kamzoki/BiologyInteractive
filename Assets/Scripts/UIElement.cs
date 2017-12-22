@@ -32,6 +32,8 @@ public class UIElement : MonoBehaviour {
     }
 
     public FunctionsEntity[] FunctionsToCall;
+
+    public string [] m_HumnaSubObjectsIndex;
     //private:
     private bool isPressedBefore = false;
 
@@ -368,6 +370,46 @@ public class UIElement : MonoBehaviour {
         Camera.main.GetComponent<VideoPlayer>().Play();
     }
 
+    public void fn_HumanSceneButton(bool isReset)
+    {
+        Debug.Log("here");
+
+        if (HumanSceneManager.HSM != null)
+        {
+            if (isReset != true)
+            {
+                for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
+                {
+                    for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
+                    {
+                        if (m_HumnaSubObjectsIndex[j] != HumanSceneManager.HSM.m_HumanSubObjects[i].name)
+                        {
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade();
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(true);
+                        }
+                        else
+                        {
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
+                {
+                    HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
+                    HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
+                }
+            }
+        }
+
+        else
+        {
+            Debug.Log(HumanSceneManager.HSM);
+        }
+    }
     private void Update()
     {
         if (startSkipping == true)
