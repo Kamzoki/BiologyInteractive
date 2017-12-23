@@ -28,11 +28,13 @@ public class HumanSubObjects
     {
         if (isFaded == false)
         {
-            Debug.Log("Here: MainToFade");
+            Debug.Log("MainToFade: isFaded = false");
             for (int i = 0; i < m_GroupSubObjects.Length; i++)
             {
+                Debug.Log("MainToFade: i = " + i);
                 for (int j = 0; j < m_GroupSubObjects[i].GetComponent<MeshRenderer>().materials.Length; j++)
                 {
+                    Debug.Log("MainToFade: j = " + j);
                     m_GroupSubObjects[i].GetComponent<MeshRenderer>().materials[j] = m_FadeMaterial[j];
                 }
             }
@@ -43,11 +45,13 @@ public class HumanSubObjects
     {
         if (isFaded == true)
         {
-            Debug.Log("Here: FadeToMain");
+            Debug.Log("FadeToMain: isFaded = true");
             for (int i = 0; i < m_GroupSubObjects.Length; i++)
             {
+                Debug.Log("FadeToMain i = " + i);
                 for (int j = 0; j < m_GroupSubObjects[i].GetComponent<MeshRenderer>().materials.Length; j++)
                 {
+                    Debug.Log("FadeToMain j = " + j);
                     m_GroupSubObjects[i].GetComponent<MeshRenderer>().materials[j] = m_MainMaterial [j];
                 }
             }
@@ -57,6 +61,6 @@ public class HumanSubObjects
     public void fn_SetisFaded(bool isFaded)
     {
         this.isFaded = isFaded;
-        Debug.Log("Here: SetisFaded");
+        Debug.Log("SetisFaded: isFaded = " + isFaded);
     }
 }
