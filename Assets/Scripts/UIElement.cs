@@ -372,29 +372,22 @@ public class UIElement : MonoBehaviour {
 
     public void fn_HumanSceneButton(bool isReset)
     {
-        Debug.Log("here");
 
         if (HumanSceneManager.HSM != null)
         {
-            Debug.Log("UI: HSM Found");
             if (isReset != true)
             {
-                Debug.Log("UI: isReset = false");
                 for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
                 {
-                    Debug.Log("UI: i = " + i);
                     for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
                     {
-                        Debug.Log("UI: j = " + j);
                         if (m_HumnaSubObjectsIndex[j] != HumanSceneManager.HSM.m_HumanSubObjects[i].name)
                         {
-                            Debug.Log("UI: Calling MainToFade, SetisFaded (true) for the SubObject: " + HumanSceneManager.HSM.m_HumanSubObjects[i].name);
                             HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade();
                             HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(true);
                         }
                         else
                         {
-                            Debug.Log("UI: Calling FadeToMain, SetisFaded (false)");
                             HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
                             HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
                         }
