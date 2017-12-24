@@ -32,8 +32,14 @@ public class UIElement : MonoBehaviour {
     }
 
     public FunctionsEntity[] FunctionsToCall;
+
+    public string [] m_HumnaSubObjectsIndex;
     //private:
     private bool isPressedBefore = false;
+
+    private bool startSkipping = false;
+    private bool isFastForward = false;
+    private long framesToSkip = 0;
 
     private void OnEnable()
     {
@@ -311,6 +317,7 @@ public class UIElement : MonoBehaviour {
             Camera.main.GetComponent<VideoPlayer>().SetTargetAudioSource(0, Camera.main.GetComponent<AudioSource>());
             Camera.main.GetComponent<VideoPlayer>().Play();
     }
+
     public void fn_StopVideo()
     {
         if (m_ActivationObjects != null)
@@ -347,4 +354,79 @@ public class UIElement : MonoBehaviour {
         }
     }
 
+    public void fn_StartVideoSkip(bool isFastForward)
+    {
+        Camera.main.GetComponent<VideoPlayer>().Pause();
+        framesToSkip = Camera.main.GetComponent<VideoPlayer>().frame;
+
+        this.isFastForward = isFastForward;
+        startSkipping = true;
+    }
+
+    public void fn_StopVideoSkip()
+    {
+        startSkipping = false;
+        Camera.main.GetComponent<VideoPlayer>().frame = framesToSkip;
+        Camera.main.GetComponent<VideoPlayer>().Play();
+    }
+
+    public void fn_HumanSceneButton(bool isReset)
+    {
+
+        if (HumanSceneManager.HSM != null)
+        {
+            if (isReset != true)
+            {
+                for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
+                {
+                    for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
+                    {
+                        if (m_HumnaSubObjectsIndex[j] != HumanSceneManager.HSM.m_HumanSubObjects[i].name)
+                        {
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade();
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(true);
+                        }
+                        else
+                        {
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
+                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
+                {
+                    HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
+                    HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
+                }
+            }
+        }
+
+        else
+        {
+            Debug.Log(HumanSceneManager.HSM);
+        }
+    }
+    private void Update()
+    {
+        if (startSkipping == true)
+        {
+            if (isFastForward == true)
+            {
+                if ((ulong)framesToSkip < Camera.main.GetComponent<VideoPlayer>().frameCount)
+                {
+                    framesToSkip += 1;
+                }
+            }
+            else
+            {
+                if ((ulong)framesToSkip > Camera.main.GetComponent<VideoPlayer>().frameCount)
+                {
+                    framesToSkip -= 1;
+                }
+            }
+        }
+    }
 }
