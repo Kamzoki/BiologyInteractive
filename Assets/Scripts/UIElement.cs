@@ -379,7 +379,7 @@ public class UIElement : MonoBehaviour {
             {
                 for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
                 {
-                    for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
+                    for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++) //TODO MAKE TO SEPERATE FOR LOOPS WITH ADITIONAL DYNAMIC BOOL
                     {
                         if (m_HumnaSubObjectsIndex[j] != HumanSceneManager.HSM.m_HumanSubObjects[i].name)
                         {
@@ -409,6 +409,7 @@ public class UIElement : MonoBehaviour {
             Debug.Log(HumanSceneManager.HSM);
         }
     }
+
     private void Update()
     {
         if (startSkipping == true)
