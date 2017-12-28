@@ -58,6 +58,28 @@ public class HumanSubObjects
         }
     }
 
+    public void fn_MainToFade(bool isReseting)
+    {
+        if (isReseting == true)
+        {
+            for (int i = 0; i < m_GroupSubObjects.Length; i++)
+            {
+                if (m_GroupSubObjects[i].name == "Body3:body2")
+                {
+                    m_GroupSubObjects[i].SetActive(false);
+                }
+                else
+                {
+                    for (int j = 0; j < m_GroupSubObjects[i].GetComponent<MeshRenderer>().materials.Length; j++)
+                    {
+                        m_GroupSubObjects[i].GetComponent<MeshRenderer>().material = m_MainMaterial[j];
+                        m_GroupSubObjects[i].transform.position = m_GroupSubObjectsOriginalPositions[i];
+                    }
+                }
+            }
+        }
+    }
+
     public void fn_FadeToMain()
     {
         if (isFaded == true)
