@@ -377,20 +377,21 @@ public class UIElement : MonoBehaviour {
         {
             if (isReset != true)
             {
+                bool isFound = false;
+
                 for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
                 {
-                    for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
+                    isFound = isHumanSubObjectMatch(HumanSceneManager.HSM.m_HumanSubObjects[i].name);
+
+                    if (isFound == true)
                     {
-                        if (m_HumnaSubObjectsIndex[j] != HumanSceneManager.HSM.m_HumanSubObjects[i].name)
-                        {
-                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade();
-                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(true);
-                        }
-                        else
-                        {
-                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
-                            HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
-                        }
+                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade();
+                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(true);
+                    }
+                    else
+                    {
+                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
+                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
                     }
                 }
             }
@@ -408,6 +409,24 @@ public class UIElement : MonoBehaviour {
         {
             Debug.Log(HumanSceneManager.HSM);
         }
+    }
+
+    private bool isHumanSubObjectMatch(string matchingName)
+    {
+        bool isFound = false;
+
+        for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
+        {
+            if (m_HumnaSubObjectsIndex[j] != matchingName)
+            {
+                isFound = true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return isFound;
     }
     private void Update()
     {
