@@ -44,12 +44,10 @@ public class HumanSubObjects
             {
                 if (m_GroupSubObjects[i].name == "Body3:body2")
                 {
-                    Debug.Log("Here");
                     m_GroupSubObjects[i].SetActive(false);
                 }
                 else
                 {
-                    Debug.Log("shit" + m_GroupSubObjects[i].name);
                     for (int j = 0; j < m_GroupSubObjects[i].GetComponent<MeshRenderer>().materials.Length; j++)
                     {
                         m_GroupSubObjects[i].GetComponent<MeshRenderer>().material = m_FadeMaterial[j];
