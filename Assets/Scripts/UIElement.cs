@@ -397,10 +397,8 @@ public class UIElement : MonoBehaviour {
             }
             else
             {
-                Debug.Log("IsReseted = true");
                 for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
                 {
-                    Debug.Log("iteration reset = " + i);
                     HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade(true);
                     HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
                 }
