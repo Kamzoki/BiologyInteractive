@@ -417,6 +417,18 @@ public class UIElement : MonoBehaviour {
         }
     }
 
+    public void fn_HumanSceneStartAnimation()
+    {
+        if (m_AnimationComponent!= null)
+        {
+            if (HumanSceneManager.HSM.isAwaken == true)
+            {
+                m_AnimationComponent.Play("Info Panel Fade Animation (HumanScene)");
+                HumanSceneManager.HSM.isAwaken = false;
+            }
+        }
+    }
+
     private bool isHumanSubObjectMatch(string matchingName)
     {
       //  Debug.Log("Entered function: isHumanSubObjectMatch, matchingName = " + matchingName);

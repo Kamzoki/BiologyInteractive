@@ -7,6 +7,10 @@ public class HumanSceneManager : MonoBehaviour {
 
     public static HumanSceneManager HSM;
     public HumanSubObjects[] m_HumanSubObjects;
+
+    [HideInInspector]
+    public bool isAwaken = false;
+
     private void Awake()
     {
         HSM = this;

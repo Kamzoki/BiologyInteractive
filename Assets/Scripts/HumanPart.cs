@@ -5,6 +5,8 @@ using UnityEngine;
 public class HumanPart : MonoBehaviour {
 
     public GameObject[] m_ActiavtionObjects;
+    public GameObject[] m_DestrctionObjects;
+
     public Animation m_AnimationComponent;
     public string m_AnimationName;
 
@@ -14,11 +16,19 @@ public class HumanPart : MonoBehaviour {
         {
             m_ActiavtionObjects[i].SetActive(true);
         }
+        for (int i = 0; i < m_DestrctionObjects.Length; i++)
+        {
+            m_DestrctionObjects[i].SetActive(false);
+        }
     }
 
     private void PlayAnimation()
     {
-        m_AnimationComponent.Play(m_AnimationName);
+        if (HumanSceneManager.HSM.isAwaken == false)
+        {
+            m_AnimationComponent.Play(m_AnimationName);
+            HumanSceneManager.HSM.isAwaken = true;
+        }
     }
     private void OnMouseUp()
     {
