@@ -7,6 +7,10 @@ public class HumanSceneManager : MonoBehaviour {
 
     public static HumanSceneManager HSM;
     public HumanSubObjects[] m_HumanSubObjects;
+
+    [HideInInspector]
+    public bool isAwaken = false;
+
     private void Awake()
     {
         HSM = this;
@@ -36,7 +40,7 @@ public class HumanSubObjects
             m_GroupSubObjectsOriginalPositions[i] = m_GroupSubObjects[i].transform.position;
         }
     }
-    public void fn_MainToFade()
+    public void fn_UnFocused()
     {
         if (isFaded == false)
         {
@@ -58,7 +62,7 @@ public class HumanSubObjects
         }
     }
 
-    public void fn_MainToFade(bool isReseting)
+    public void fn_UnFocused(bool isReseting)
     {
         if (isReseting == true)
         {
@@ -80,7 +84,7 @@ public class HumanSubObjects
         }
     }
 
-    public void fn_FadeToMain()
+    public void fn_Focused()
     {
         if (isFaded == true)
         {
@@ -88,6 +92,7 @@ public class HumanSubObjects
             {
                 if (m_GroupSubObjects[i].name == "Body3:body2")
                 {
+                    
                     m_GroupSubObjects[i].SetActive(true);
                 }
                 else
