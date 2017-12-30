@@ -375,31 +375,37 @@ public class UIElement : MonoBehaviour {
 
         if (HumanSceneManager.HSM != null)
         {
+            Debug.Log("Entered function: HumanSceneButton");
             if (isReset != true)
             {
+                Debug.Log("isReset: false");
                 bool isFound = false;
 
                 for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
                 {
+                    Debug.Log("Main Loop: i = " + i);
                     isFound = isHumanSubObjectMatch(HumanSceneManager.HSM.m_HumanSubObjects[i].name);
 
                     if (isFound == true)
                     {
-                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade();
+                        Debug.Log("isFound: True");
+                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_UnFocused();
                         HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(true);
                     }
                     else
                     {
-                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_FadeToMain();
+                        Debug.Log("isFound: false");
+                        HumanSceneManager.HSM.m_HumanSubObjects[i].fn_Focused();
                         HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
                     }
                 }
             }
             else
             {
+                Debug.Log("isReset: true");
                 for (int i = 0; i < HumanSceneManager.HSM.m_HumanSubObjects.Length; i++)
                 {
-                    HumanSceneManager.HSM.m_HumanSubObjects[i].fn_MainToFade(true);
+                    HumanSceneManager.HSM.m_HumanSubObjects[i].fn_UnFocused(true);
                     HumanSceneManager.HSM.m_HumanSubObjects[i].fn_SetisFaded(false);
                 }
             }
@@ -407,16 +413,18 @@ public class UIElement : MonoBehaviour {
 
         else
         {
-            Debug.Log(HumanSceneManager.HSM);
+            Debug.Log("HSM: NULL");
         }
     }
 
     private bool isHumanSubObjectMatch(string matchingName)
     {
+        Debug.Log("Entered function: isHumanSubObjectMatch, matchingName = " + matchingName);
         bool isFound = false;
 
         for (int j = 0; j < m_HumnaSubObjectsIndex.Length; j++)
         {
+            Debug.Log("Sup Loop: i = " + j + "CurrentName = " + m_HumnaSubObjectsIndex[j]);
             if (m_HumnaSubObjectsIndex[j] != matchingName)
             {
                 isFound = true;
